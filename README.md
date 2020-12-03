@@ -5,9 +5,7 @@ Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response c
 
   ```{r eval=FALSE}
 install.packages("devtools")
-library(devtools)
-install_github("MahieuB/MultiResponseR")
-library(MultiResponseR)
+devtools::install_github("MahieuB/MultiResponseR")
 ```
 
 # <span style="color: #EA485C">Using MultiResponseR</span>
@@ -15,6 +13,7 @@ library(MultiResponseR)
 To get an overview of the functions included in the package:
 
   ```{r eval=FALSE}
+library(MultiResponseR)  
 ?MultiResponseR
 ```
 

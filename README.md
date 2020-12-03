@@ -18,4 +18,4 @@ To get an overview of the functions included in the package:
 ?MultiResponseR
 ```
 
-Then go the "See Also" section
+Then go to the "See Also" section

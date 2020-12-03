@@ -6,7 +6,7 @@ Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response c
   ```{r eval=FALSE}
 install.packages("devtools")
 library(devtools)
-install_github(MahieuB/MultiResponseR")
+install_github("MahieuB/MultiResponseR")
 library(MultiResponseR)
 ```
 

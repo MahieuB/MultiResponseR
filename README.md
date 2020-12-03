@@ -10,7 +10,7 @@ devtools::install_github(MahieuB/MultiResponseR")
 library(MultiResponseR)
 ```
 
-# <span style="color: #EA485C">Using BinQmet</span>
+# <span style="color: #EA485C">Using MultiResponseR</span>
 
 To get an overview of the functions included in the package:
 

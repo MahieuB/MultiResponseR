@@ -18,8 +18,10 @@ sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf, ncores = 2)
 \value{
 A list with the following elements:
 \describe{
-\item{mrCA}{Results of the mrCA}
-\item{coord.plot.desc}{Coordinates of the descriptors on the plot: they differ from those of mrCA$col.coord by an expansion factor}
+\item{eigen}{Eigenvalues of the mrCA and their corresponding percentages of inertia}
+\item{row.coord}{Products coordinates}
+\item{col.coord}{Descriptors coordinates}
+\item{svd}{Results of the singular value decomposition}
 \item{bootstrap.replicate.coord}{Coordinates of the rotated bootstrap replicates}
 \item{total.bootstrap.test.pvalues}{P-values of the pairwise total bootstrap tests}
 }

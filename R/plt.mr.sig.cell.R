@@ -3,7 +3,7 @@
 #' @description This function plots the results coming from \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}
 #'
 #' @param res A list returned by \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}
-#' @param alpha The α risk to consider the tests as significant. Note that the tests can be slightly conservative as suggested by Appendix in Mahieu, Schlich, Visalli, and Cardot (2020)
+#' @param alpha The alpha risk to consider the tests as significant. Note that the tests can be slightly conservative as suggested by Appendix in Mahieu, Schlich, Visalli, and Cardot (2020)
 #' @param choice Which table from \emph{res} should be plotted? Default is percent.derived.cont
 #' @param col.greater The color used to highlight significant positive associations
 #' @param col.lower The color used to highlight significant negative associations

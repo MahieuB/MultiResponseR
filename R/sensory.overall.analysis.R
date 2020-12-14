@@ -4,7 +4,7 @@
 #'
 #' @param data A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor
 #' @param nMC Number of Monte-Carlo simulations to consider at each step of the overall analysis
-#' @param alpha The α risk to consider at each step of the overall analysis
+#' @param alpha The alpha risk to consider at each step of the overall analysis
 #' @param cell.two.sided Logical. Should the multiple-response tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
 #' @param ncores Number of cores used in the Monte-Carlo simulations. Default is 2. See details
 #'

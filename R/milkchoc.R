@@ -1,6 +1,6 @@
 #' Check-All-That-Apply data
 #'
-#' @description Data coming from a Check-All-That-Apply experiment on milk chocolates. This dataset corresponds to the flavor data used as examples and described more precisely in COMPLETER
+#' @description Data coming from a Check-All-That-Apply experiment on milk chocolates. This dataset corresponds to the flavor data used as examples and described more precisely in Mahieu, Schlich, Visalli, and Cardot (2020)
 #'
 #' @usage data(milkchoc)
 #'

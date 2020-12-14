@@ -17,7 +17,7 @@ sensory.overall.analysis(
 
 \item{nMC}{Number of Monte-Carlo simulations to consider at each step of the overall analysis}
 
-\item{alpha}{The α risk to consider at each step of the overall analysis}
+\item{alpha}{The alpha risk to consider at each step of the overall analysis}
 
 \item{cell.two.sided}{Logical. Should the multiple-response tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
 

@@ -11,7 +11,7 @@ An object of class \code{data.frame} with 280 rows and 8 columns.
 data(milkchoc)
 }
 \description{
-Data coming from a Check-All-That-Apply experiment on milk chocolates. This dataset corresponds to the flavor data used as examples and described more precisely in COMPLETER
+Data coming from a Check-All-That-Apply experiment on milk chocolates. This dataset corresponds to the flavor data used as examples and described more precisely in Mahieu, Schlich, Visalli, and Cardot (2020)
 }
 \examples{
 data(milkchoc)

@@ -11,7 +11,7 @@ mr.dimensionality.test(data, nperm = 2000, alpha = 0.05, ncores = 2)
 
 \item{nperm}{Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details}
 
-\item{alpha}{The α risk of the test}
+\item{alpha}{The alpha risk of the test}
 
 \item{ncores}{Number of cores used to estimate the null distribution. Default is 2. See details}
 }

@@ -23,9 +23,9 @@ plt.mrCA(
 
 \item{axes}{Which dimensions of the mrCA should be plotted?}
 
-\item{alpha.total.bootstrap.test}{The α risk of the total bootstrap tests. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE. See details}
+\item{alpha.total.bootstrap.test}{The alpha risk of the total bootstrap tests. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE. See details}
 
-\item{alpha.ellipse}{The α risk of the confidence ellipses. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE}
+\item{alpha.ellipse}{The alpha risk of the confidence ellipses. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE}
 
 \item{select.desc.rep}{A character vector specifying the descriptors/response options to plot. By default, all descriptors/response options are plotted}
 
@@ -51,7 +51,7 @@ This function plots the results coming from \code{\link[MultiResponseR]{sensory.
 }
 \details{
 \itemize{
-\item \strong{alpha.total.bootstrap.test}: Products/categories non-significantly different at the α risk of \emph{alpha.total.bootstrap.test} according to the total bootstrap test are linked by a line on the plot. If these links are not required, \emph{alpha.total.bootstrap.test} can be set to 1
+\item \strong{alpha.total.bootstrap.test}: Products/categories non-significantly different at the alpha risk of \emph{alpha.total.bootstrap.test} according to the total bootstrap test are linked by a line on the plot. If these links are not required, \emph{alpha.total.bootstrap.test} can be set to 1
 }
 }
 \examples{

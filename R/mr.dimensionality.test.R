@@ -4,7 +4,7 @@
 #'
 #' @param data A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
-#' @param alpha The α risk of the test
+#' @param alpha The alpha risk of the test
 #' @param ncores Number of cores used to estimate the null distribution. Default is 2. See details
 #'
 #' @return A list with the following elements:

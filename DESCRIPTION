@@ -25,4 +25,6 @@ Imports:
     candisc,
     flextable,
     officer,
-    abind
+    abind,
+    ggplot2,
+    ggrepel

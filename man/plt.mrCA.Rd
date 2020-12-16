@@ -5,15 +5,15 @@
 \title{Plot factor plan resulting from multiple-response Correspondence Analysis (mrCA)}
 \usage{
 plt.mrCA(
-  res,
+  res = res,
   axes = c(1, 2),
   alpha.total.bootstrap.test = 0.05,
   alpha.ellipse = alpha.total.bootstrap.test,
   select.desc.rep = rownames(res$col.coord),
   rev.x = FALSE,
   rev.y = FALSE,
-  size.points = 1.4,
-  size.lab = 1.4,
+  size.points = 3.5,
+  size.lab = 6,
   expansion = 1.25,
   title = NULL
 )

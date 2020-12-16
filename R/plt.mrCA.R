@@ -25,6 +25,8 @@
 #' @import FactoMineR
 #' @import graphics
 #' @import stats
+#' @import ggplot2
+#' @import ggrepel
 #'
 #' @return
 #' @export
@@ -56,9 +58,17 @@
 #'res=sensory.mrCA(milkchoc,nbaxes.sig=dim.sig)
 #'
 #'plt.mrCA(res)
-plt.mrCA=function(res,axes=c(1,2),alpha.total.bootstrap.test=0.05,alpha.ellipse=alpha.total.bootstrap.test,
-                  select.desc.rep=rownames(res$col.coord),rev.x=FALSE,rev.y=FALSE,
-                  size.points=1.4,size.lab=1.4,expansion=1.25,title=NULL){
+plt.mrCA=function(res=res,
+                  axes = c(1,2),
+                  alpha.total.bootstrap.test = 0.05,
+                  alpha.ellipse = alpha.total.bootstrap.test,
+                  select.desc.rep = rownames(res$col.coord),
+                  rev.x = FALSE,
+                  rev.y = FALSE,
+                  size.points = 3.5,
+                  size.lab = 6,
+                  expansion = 1.25,
+                  title = NULL){
   classe=class(res)
   if (classe!="list"){
     stop("res must be a list resulting from the execution of sensory.mrCA or mrCA")
@@ -166,19 +176,19 @@ plt.mrCA=function(res,axes=c(1,2),alpha.total.bootstrap.test=0.05,alpha.ellipse=
   ymin=ymin*1.1
   ymax=ymax*1.1
 
-  plot(res$row.coord[,axes],cex=size.points,col="blue",pch=16,
-       xlim=c(xmin,xmax),ylim=c(ymin,ymax),
-       xlab=paste("Dim ",axes[1]," (",round(res$eigen[axes[1],2],2)," %)",sep=""),
-       ylab=paste("Dim ",axes[2]," (",round(res$eigen[axes[2],2],2)," %)",sep=""),
-       main=title,cex.main=2,cex.lab=1.4,xaxt="n", yaxt="n")
-  abline(h=0,v=0,lty="dashed")
+  p=ggplot(as.data.frame(res$row.coord),aes(x=res$row.coord[,axes[1]],y=res$row.coord[,axes[2]]))+theme_bw()
+  p=p+xlim(xmin,xmax)+ylim(ymin,ymax)+xlab(paste("Dim ",axes[1]," (",round(res$eigen[axes[1],2],2)," %)",sep=""))+ylab(paste("Dim ",axes[2]," (",round(res$eigen[axes[2],2],2)," %)",sep=""))
+  p=p+theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank(),axis.title.x = element_text(size = 16,face = "bold"),axis.title.y = element_text(size = 16,face = "bold"))
+  p=p+geom_hline(yintercept=0,linetype="dashed",size=1)+geom_vline(xintercept=0,linetype="dashed",size=1)
 
   if (!is.null(res$bootstrap.replicate.coord)){
-    for (cate in levels(ell[,1])){
-      toplot=ell[ell[,1]==cate,]
-      lines(toplot[,2],toplot[,3],type="l",col="blue",lwd=2)
-    }
+
+    p=p+geom_path(data=as.data.frame(ell),aes(x=ell[,2],y=ell[,3],group=ell[,1]),colour="blue",size=1.3)
+
     diff.test=res$total.bootstrap.test.pvalues
+
+    df.segment=NULL
+
     for (i in 1:nrow(diff.test)){
       for (j in i:ncol(diff.test)){
         p.1=rownames(diff.test)[i]
@@ -187,35 +197,35 @@ plt.mrCA=function(res,axes=c(1,2),alpha.total.bootstrap.test=0.05,alpha.ellipse=
           ac.produit.coord=as.data.frame(res$row.coord[,axes])
           p.1.coord=ac.produit.coord[p.1,]
           p.2.coord=ac.produit.coord[p.2,]
-          segments(p.1.coord[,1],p.1.coord[,2],p.2.coord[,1],p.2.coord[,2],lwd=2,lty="solid",col="blue")
+          sous.df.segment=cbind(p.1.coord,p.2.coord)
+          df.segment=rbind(df.segment,sous.df.segment)
         }
       }
     }
+    if (!is.null(df.segment)){
+      colnames(df.segment)=as.character(1:ncol(df.segment))
+      p=p+geom_segment(data=as.data.frame(df.segment),aes(x = df.segment[,1], y = df.segment[,2], xend = df.segment[,3], yend = df.segment[,4]),colour="blue",size=1.3)
+    }
   }
+
   if (!is.null(select.desc.rep)){
-    toplot=as.matrix(adjusted.col.coord[,axes,drop=FALSE])
-    for (i in 1:nrow(toplot)){
-      tox=toplot[i,1]
-      toy=toplot[i,2]
-      arrows(0,0,tox,toy,length = 0.15,col="red",lwd=2)
+    df.fleche=as.matrix(adjusted.col.coord[,axes,drop=FALSE])
+    col.fleche=rep("red",length(select.desc.rep))
+    if(!is.null(res$proj.col.coord)){
+      df.fleche=rbind(df.fleche,as.matrix(res$proj.col.coord[,axes,drop=FALSE]))
+      col.fleche=c(col.fleche,rep("red4",nrow(res$proj.col.coord)))
     }
   }
 
-  if(!is.null(res$proj.col.coord)){
-    toplot=as.matrix(res$proj.col.coord[,axes,drop=FALSE])
-    for (i in 1:nrow(toplot)){
-      tox=toplot[i,1]
-      toy=toplot[i,2]
-      arrows(0,0,tox,toy,length = 0.15,col="red4",lwd=2)
-    }
-  }
+  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.5, "cm")), colour=col.fleche,size=1.2)
 
-  points(res$row.coord[,axes],cex=size.points,col="blue",pch=16)
+  df.point=res$row.coord[,axes,drop=FALSE]
+  col.point=rep("blue",nrow(res$row.coord))
   if(!is.null(res$proj.row.coord)){
-    for (i in 1:nrow(res$proj.row.coord)){
-      points(res$proj.row.coord[i,axes[1]],res$proj.row.coord[i,axes[2]],cex=size.points,col="darkblue",pch=16)
-    }
+    df.point=rbind(df.point,res$proj.row.coord)
+    col.point=c(col.point,rep("darkblue",nrow(res$proj.row.coord)))
   }
+  p=p+geom_point(data=as.data.frame(df.point),aes(x=df.point[,1],y=df.point[,2]),colour=col.point,size=size.points)
 
   if (!is.null(select.desc.rep)){
     lab.desc=as.matrix(adjusted.col.coord[,axes,drop=FALSE])
@@ -250,5 +260,6 @@ plt.mrCA=function(res,axes=c(1,2),alpha.total.bootstrap.test=0.05,alpha.ellipse=
     }
 
   }
-  autoLab(lab,rownames(lab),col=col.lab,cex=size.lab,shadotext = TRUE)
+  p=p+geom_label_repel(as.data.frame(lab),mapping=aes(x=lab[,1],y=lab[,2],label=rownames(lab)),label.size=NA,colour=col.lab,size=size.lab,segment.size=1)
+  return(p)
 }

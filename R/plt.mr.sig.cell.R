@@ -106,5 +106,5 @@ plt.mr.sig.cell=function(res,alpha=0.075,choice="percent.derived.cont",col.great
   p=border_inner_h(p,border = fp_border(color = "black", style = "solid", width = 1),part="all")
   p=bold(p,j=1)
   p=bold(p,part="header")
-  print(p)
+  return(p)
 }

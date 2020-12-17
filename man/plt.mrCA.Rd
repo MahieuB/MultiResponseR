@@ -13,7 +13,7 @@ plt.mrCA(
   rev.x = FALSE,
   rev.y = FALSE,
   size.points = 3.5,
-  size.lab = 6,
+  size.lab = 5,
   expansion = 1.25,
   title = NULL
 )

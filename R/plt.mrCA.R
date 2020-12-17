@@ -66,7 +66,7 @@ plt.mrCA=function(res=res,
                   rev.x = FALSE,
                   rev.y = FALSE,
                   size.points = 3.5,
-                  size.lab = 6,
+                  size.lab = 5,
                   expansion = 1.25,
                   title = NULL){
   classe=class(res)
@@ -177,8 +177,8 @@ plt.mrCA=function(res=res,
   ymax=ymax*1.1
 
   p=ggplot(as.data.frame(res$row.coord),aes(x=res$row.coord[,axes[1]],y=res$row.coord[,axes[2]]))+theme_bw()
-  p=p+xlim(xmin,xmax)+ylim(ymin,ymax)+xlab(paste("Dim ",axes[1]," (",round(res$eigen[axes[1],2],2)," %)",sep=""))+ylab(paste("Dim ",axes[2]," (",round(res$eigen[axes[2],2],2)," %)",sep=""))
-  p=p+theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank(),axis.title.x = element_text(size = 16,face = "bold"),axis.title.y = element_text(size = 16,face = "bold"))
+  p=p+xlim(xmin,xmax)+ylim(ymin,ymax)+xlab(paste("Dim ",axes[1]," (",round(res$eigen[axes[1],2],2)," %)",sep=""))+ylab(paste("Dim ",axes[2]," (",round(res$eigen[axes[2],2],2)," %)",sep=""))+ggtitle(title)
+  p=p+theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank(),axis.title.x = element_text(size = 16,face = "bold"),axis.title.y = element_text(size = 16,face = "bold"),plot.title = element_text(hjust = 0.5,face = "bold",size=20))
   p=p+geom_hline(yintercept=0,linetype="dashed",size=1)+geom_vline(xintercept=0,linetype="dashed",size=1)
 
   if (!is.null(res$bootstrap.replicate.coord)){

@@ -222,7 +222,7 @@ plt.mrCA=function(res=res,
   df.point=res$row.coord[,axes,drop=FALSE]
   col.point=rep("blue",nrow(res$row.coord))
   if(!is.null(res$proj.row.coord)){
-    df.point=rbind(df.point,res$proj.row.coord)
+    df.point=rbind(df.point,res$proj.row.coord[,axes,drop=FALSE])
     col.point=c(col.point,rep("darkblue",nrow(res$proj.row.coord)))
   }
   p=p+geom_point(data=as.data.frame(df.point),aes(x=df.point[,1],y=df.point[,2]),colour=col.point,size=size.points)

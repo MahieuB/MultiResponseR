@@ -5,7 +5,7 @@
 \title{Plot factor plan resulting from multiple-response Correspondence Analysis (mrCA)}
 \usage{
 plt.mrCA(
-  res = res,
+  res,
   axes = c(1, 2),
   alpha.total.bootstrap.test = 0.05,
   alpha.ellipse = alpha.total.bootstrap.test,

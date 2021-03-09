@@ -58,7 +58,7 @@
 #'res=sensory.mrCA(milkchoc,nbaxes.sig=dim.sig)
 #'
 #'plt.mrCA(res)
-plt.mrCA=function(res=res,
+plt.mrCA=function(res,
                   axes = c(1,2),
                   alpha.total.bootstrap.test = 0.05,
                   alpha.ellipse = alpha.total.bootstrap.test,

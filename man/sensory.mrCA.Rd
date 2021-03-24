@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensory.mrCA.R
 \name{sensory.mrCA}
 \alias{sensory.mrCA}
-\title{Multi-response Correspondence Analysis (mrCA) for sensory data}
+\title{Multiple-response Correspondence Analysis (mrCA) for sensory data}
 \usage{
 sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf, ncores = 2)
 }

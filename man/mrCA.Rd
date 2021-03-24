@@ -2,7 +2,7 @@
 % Please edit documentation in R/mrCA.R
 \name{mrCA}
 \alias{mrCA}
-\title{Multi-response Correspondence Analysis (mrCA)}
+\title{Multiple-response Correspondence Analysis (mrCA)}
 \usage{
 mrCA(
   data,
@@ -46,7 +46,7 @@ A list with the following elements:
 }
 }
 \description{
-This functions performs a multi-response Correspondence Analysis (mrCA) as defined in Mahieu, Schlich, Visalli, and Cardot (2020)
+This functions performs a multiple-response Correspondence Analysis (mrCA) as defined in Mahieu, Schlich, Visalli, and Cardot (2020)
 }
 \details{
 \itemize{

@@ -33,15 +33,11 @@ Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response c
 \code{\link[MultiResponseR]{sensory.overall.analysis}}
 }
 \author{
-\strong{Maintainer}: Michel Visalli \email{michel.visalli@inrae.fr} (Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte) [contributor]
-
-Authors:
-\itemize{
-  \item Benjamin Mahieu \email{benjaminmahieu@yahoo.com}
-}
+\strong{Maintainer}: Benjamin Mahieu \email{benjaminmahieu@yahoo.com}
 
 Other contributors:
 \itemize{
+  \item Michel Visalli \email{michel.visalli@inrae.fr} (Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte) [contributor]
   \item Herve Cardot \email{herve.cardot@u-bourgogne.fr} (Institut de Mathematiques de Bourgogne, CNRS, Universite Bourgogne Franche-Comte) [contributor, thesis advisor]
   \item Pascal Schlich \email{pascal.schlich@inrae.fr} (Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte) [thesis advisor]
 }

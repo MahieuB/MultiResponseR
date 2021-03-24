@@ -1,4 +1,4 @@
-#' Multi-response Correspondence Analysis (mrCA) for sensory data
+#' Multiple-response Correspondence Analysis (mrCA) for sensory data
 #'
 #' @description This function performs the mrCA of the data as well as the total bootstrap procedure (Cadoret & Husson, 2013) and the pairwise total bootstrap tests (Mahieu, Visalli, Thomas, & Schlich, 2020). The difference with \code{\link[MultiResponseR]{mrCA}} used with ellipse=TRUE is that the total bootstrap procedure takes into account the subject structure of sensory data in \code{\link[MultiResponseR]{sensory.mrCA}}
 #'

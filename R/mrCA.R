@@ -1,6 +1,6 @@
-#' Multi-response Correspondence Analysis (mrCA)
+#' Multiple-response Correspondence Analysis (mrCA)
 #'
-#' @description This functions performs a multi-response Correspondence Analysis (mrCA) as defined in Mahieu, Schlich, Visalli, and Cardot (2020)
+#' @description This functions performs a multiple-response Correspondence Analysis (mrCA) as defined in Mahieu, Schlich, Visalli, and Cardot (2020)
 #'
 #' @param data A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option
 #' @param proj.row Optional. A contingency table with new categories to be projected as supplementary rows within the mrCA space in rows and the same response options as data in columns

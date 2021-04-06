@@ -6,7 +6,7 @@
 \usage{
 plt.mr.sig.cell(
   res,
-  alpha = 0.075,
+  alpha = 0.05,
   choice = "percent.derived.cont",
   col.greater = "green3",
   col.lower = "orangered"
@@ -15,7 +15,7 @@ plt.mr.sig.cell(
 \arguments{
 \item{res}{A list returned by \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}}
 
-\item{alpha}{The alpha risk to consider the tests as significant. Note that the tests can be slightly conservative as suggested by Appendix in Mahieu, Schlich, Visalli, and Cardot (2020)}
+\item{alpha}{The alpha risk to consider the tests as significant}
 
 \item{choice}{Which table from \emph{res} should be plotted? Default is percent.derived.cont}
 

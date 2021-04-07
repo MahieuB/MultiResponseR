@@ -127,10 +127,10 @@ plt.mrCA=function(res,
     adjusted.col.coord[,axes[1]]=-adjusted.col.coord[,axes[1]]
     ell[,2]=-ell[,2]
     if (!is.null(res$proj.col.coord)){
-      res$proj.col.coord=-res$proj.col.coord[,axes[1]]
+      res$proj.col.coord[,axes[1]]=-res$proj.col.coord[,axes[1]]
     }
     if (!is.null(res$proj.row.coord)){
-      res$proj.row.coord=-res$proj.row.coord[,axes[1]]
+      res$proj.row.coord[,axes[1]]=-res$proj.row.coord[,axes[1]]
     }
   }
   if(rev.y){
@@ -138,10 +138,10 @@ plt.mrCA=function(res,
     adjusted.col.coord[,axes[2]]=-adjusted.col.coord[,axes[2]]
     ell[,3]=-ell[,3]
     if (!is.null(res$proj.col.coord)){
-      res$proj.col.coord=-res$proj.col.coord[,axes[2]]
+      res$proj.col.coord[,axes[2]]=-res$proj.col.coord[,axes[2]]
     }
     if (!is.null(res$proj.row.coord)){
-      res$proj.row.coord=-res$proj.row.coord[,axes[2]]
+      res$proj.row.coord[,axes[2]]=-res$proj.row.coord[,axes[2]]
     }
   }
 

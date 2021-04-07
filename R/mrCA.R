@@ -97,6 +97,8 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
     stop("Some columns are only zeros")
   }
 
+  data=data[order(data$cat),]
+  rownames(data)=as.character(1:nrow(data))
   cont=aggregate(.~cat,data,sum)
   rownames(cont)=cont$cat
   cont$cat=NULL
@@ -220,14 +222,11 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
 
     sortie <- foreach(icount(nboot), .combine='rbind') %dopar% {
 
-      vec.ligne=NULL
-      for (boot.cat in levels(data$cat)){
-        les.ligne=which(data$cat==boot.cat)
-        loto=sample(les.ligne,length(les.ligne),replace = TRUE)
-        vec.ligne=c(vec.ligne,loto)
-      }
+      choix.ligne=tapply(1:nrow(data), data$cat, sample,replace=TRUE)
+      vec.ligne=unlist(choix.ligne)
 
       jdd.tirage=data[vec.ligne,]
+      jdd.tirage=jdd.tirage[order(jdd.tirage$cat),]
       rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
       nplus.tirage=table(jdd.tirage$cat)

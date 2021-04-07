@@ -111,12 +111,11 @@ sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
   sortie <- foreach(icount(nperm), .combine='rbind') %dopar% {
     virt.data=data
 
-    loto=tapply(1:nrow(virt.data), virt.data$sujet, sample,replace=FALSE)
-    loto=unlist(loto)
-    virt.data$produit=virt.data$produit[loto]
-    virt.data=virt.data[order(virt.data$sujet,virt.data$produit),]
-    rownames(virt.data)=as.character(1:nrow(virt.data))
-
+    for(s.perm in levels(virt.data$sujet)){
+      l.s=which(virt.data$sujet==s.perm)
+      loto=sample(l.s,length(l.s),replace = FALSE)
+      virt.data$produit[l.s]=virt.data$produit[loto]
+    }
 
     org=aggregate(.~produit,virt.data,sum)
     org$sujet=NULL

@@ -149,11 +149,11 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,nc
   sortie <- foreach(icount(nsample), .combine='acomb',.multicombine = TRUE) %dopar% {
     virt.data=data
 
-    loto=tapply(1:nrow(virt.data), virt.data$sujet, sample,replace=TRUE)
-    loto=unlist(loto)
-    virt.data[,3:ncol(virt.data)]=virt.data[loto,3:ncol(virt.data)]
-    virt.data=virt.data[order(virt.data$sujet,virt.data$produit),]
-    rownames(virt.data)=as.character(1:nrow(virt.data))
+    for(s.perm in levels(virt.data$sujet)){
+      l.s=which(virt.data$sujet==s.perm)
+      loto=sample(l.s,length(l.s),replace = TRUE)
+      virt.data[l.s,3:ncol(virt.data)]=virt.data[loto,3:ncol(virt.data)]
+    }
 
     org=aggregate(.~produit,virt.data,sum)
     org$sujet=NULL
@@ -219,8 +219,6 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,nc
         stop("Some columns are only zeros")
       }
 
-      data=data[order(data$cat),]
-      rownames(data)=as.character(1:nrow(data))
       cont=aggregate(.~cat,data,sum)
       rownames(cont)=cont$cat
       cont$cat=NULL
@@ -344,11 +342,14 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,nc
 
         sortie <- foreach(icount(nboot), .combine='rbind') %dopar% {
 
-          choix.ligne=tapply(1:nrow(data), data$cat, sample,replace=TRUE)
-          vec.ligne=unlist(choix.ligne)
+          vec.ligne=NULL
+          for (boot.cat in levels(data$cat)){
+            les.ligne=which(data$cat==boot.cat)
+            loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+            vec.ligne=c(vec.ligne,loto)
+          }
 
           jdd.tirage=data[vec.ligne,]
-          jdd.tirage=jdd.tirage[order(jdd.tirage$cat),]
           rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
           nplus.tirage=table(jdd.tirage$cat)

@@ -119,20 +119,22 @@ sensory.mrCA=function(data,nboot=2000,nbaxes.sig=Inf,ncores=2){
 
   registerDoParallel(cores = ncores)
   nboot=nboot
+  nvirtual=nlevels(data$sujet)
 
   sortie <- foreach(icount(nboot), .combine='rbind') %dopar% {
 
-    vec.suj=sample(levels(data$sujet),nlevels(data$sujet),replace = TRUE)
-    vec.suj=as.matrix(vec.suj)
-    look.ligne=function(indice){
-      retour=which(data$sujet==indice)
-      return(retour)
-    }
-    lala=apply(vec.suj, 1, look.ligne)
-    vec.ligne=as.vector(lala)
+    pioche=unique(data$sujet)
+    nb.tirage=length(pioche)
+    nb.panel.virtuel=nvirtual
+    loto=sample(1:nb.tirage,nb.panel.virtuel,replace = TRUE)
+    tirage=pioche[loto]
 
+    vec.ligne=NULL
+    for (sujet.tirage in tirage){
+      nouvelle.ligne=which(data$sujet==sujet.tirage)
+      vec.ligne=c(vec.ligne,nouvelle.ligne)
+    }
     jdd.tirage=data[vec.ligne,]
-    jdd.tirage=jdd.tirage[order(jdd.tirage$sujet,jdd.tirage$produit),]
     rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
     param.etendu.tirage=table(jdd.tirage$sujet,jdd.tirage$produit)
@@ -234,8 +236,6 @@ sensory.mrCA=function(data,nboot=2000,nbaxes.sig=Inf,ncores=2){
         stop("Some columns are only zeros")
       }
 
-      data=data[order(data$cat),]
-      rownames(data)=as.character(1:nrow(data))
       cont=aggregate(.~cat,data,sum)
       rownames(cont)=cont$cat
       cont$cat=NULL
@@ -359,11 +359,14 @@ sensory.mrCA=function(data,nboot=2000,nbaxes.sig=Inf,ncores=2){
 
         sortie <- foreach(icount(nboot), .combine='rbind') %dopar% {
 
-          choix.ligne=tapply(1:nrow(data), data$cat, sample,replace=TRUE)
-          vec.ligne=unlist(choix.ligne)
+          vec.ligne=NULL
+          for (boot.cat in levels(data$cat)){
+            les.ligne=which(data$cat==boot.cat)
+            loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+            vec.ligne=c(vec.ligne,loto)
+          }
 
           jdd.tirage=data[vec.ligne,]
-          jdd.tirage=jdd.tirage[order(jdd.tirage$cat),]
           rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
           nplus.tirage=table(jdd.tirage$cat)
@@ -552,6 +555,7 @@ sensory.mrCA=function(data,nboot=2000,nbaxes.sig=Inf,ncores=2){
       back=list(eigen=mat.eig,row.coord=row.coord,col.coord=col.coord,proj.row.coord=proj.row.coord,proj.col.coord=proj.col.coord,svd=list(u=u,vs=vs,v=v),bootstrap.replicate.coord=toellipse,total.bootstrap.test.pvalues=diff.test)
       return(back)
     }
+
 
     ######
     verif=colSums(cont.tirage)

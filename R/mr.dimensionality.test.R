@@ -69,8 +69,6 @@ mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
     }
   }
   colnames(data)[1]="category"
-  data=data[order(data$category),]
-  rownames(data)=as.character(1:nrow(data))
   original=aggregate(.~category,data,sum)
   rownames(original)=original$category
   original$category=NULL

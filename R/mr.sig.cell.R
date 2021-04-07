@@ -88,8 +88,6 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
   g=data[,c("category")]
   data=cbind.data.frame(g,d)
   colnames(data)[1]="category"
-  data=data[order(data$category),]
-  rownames(data)=as.character(1:nrow(data))
 
 
   nplus=table(data$category)
@@ -195,8 +193,6 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
         stop("Some columns are only zeros")
       }
 
-      data=data[order(data$cat),]
-      rownames(data)=as.character(1:nrow(data))
       cont=aggregate(.~cat,data,sum)
       rownames(cont)=cont$cat
       cont$cat=NULL
@@ -242,7 +238,6 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
       }else{
         dvs=diag(vs)
       }
-
       row.coord=(u/sqrt(marge.r))%*%dvs
       col.coord=v
 
@@ -320,11 +315,14 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
 
         sortie <- foreach(icount(nboot), .combine='rbind') %dopar% {
 
-          choix.ligne=tapply(1:nrow(data), data$cat, sample,replace=TRUE)
-          vec.ligne=unlist(choix.ligne)
+          vec.ligne=NULL
+          for (boot.cat in levels(data$cat)){
+            les.ligne=which(data$cat==boot.cat)
+            loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+            vec.ligne=c(vec.ligne,loto)
+          }
 
           jdd.tirage=data[vec.ligne,]
-          jdd.tirage=jdd.tirage[order(jdd.tirage$cat),]
           rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
           nplus.tirage=table(jdd.tirage$cat)

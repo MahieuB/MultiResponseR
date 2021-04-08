@@ -24,7 +24,7 @@ sensory.overall.analysis(
 \item{ncores}{Number of cores used in the Monte-Carlo simulations. Default is 2. See details}
 }
 \value{
-The first mrCA factor map and the percent.derived.cont table with significant cells highlighted
+The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted
 }
 \description{
 Successively performs \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}, \code{\link[MultiResponseR]{sensory.mrCA}} and \code{\link[MultiResponseR]{sensory.mr.sig.cell}}

@@ -1,6 +1,6 @@
 #' Multiple-response dimensionality test
 #'
-#' @description Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random permutations to estimate the null distribution. This test results of the transposition of the dimensionality test introduced in Mahieu, Visalli, and Schlich (2020) from the usual chi-square framework to the modified chi-square framework introduced in Loughin and Scherer (1998)
+#' @description Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random permutations to estimate the null distribution
 #'
 #' @param data A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
@@ -20,7 +20,6 @@
 #'   \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nperm} datasets are generated.
 #' }
 #' @references Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
-#' @references Mahieu, B., Visalli, M., & Schlich, P. (2020). Accounting for the dimensionality of the dependence in analyses of contingency tables obtained with Check-All-That-Apply and Free-Comment. Food Quality and Preference, 83.
 #' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
 #'
 #' @import parallel

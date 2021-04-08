@@ -13,7 +13,7 @@
 #'   \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the simulations are over.
 #' }
 #'
-#' @return The first mrCA factor map and the percent.derived.cont table with significant cells highlighted
+#' @return The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted
 #' @export
 #'
 #' @import foreach

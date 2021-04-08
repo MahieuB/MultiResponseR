@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensory.mrCA.R
 \name{sensory.mrCA}
 \alias{sensory.mrCA}
-\title{Multiple-response Correspondence Analysis (mrCA) for sensory data}
+\title{Multiple-response Correspondence Analysis (MR-CA) for sensory data}
 \usage{
 sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf, ncores = 2)
 }
@@ -27,11 +27,11 @@ A list with the following elements:
 }
 }
 \description{
-This function performs the mrCA of the data as well as the total bootstrap procedure (Cadoret & Husson, 2013) and the pairwise total bootstrap tests (Mahieu, Visalli, Thomas, & Schlich, 2020). The difference with \code{\link[MultiResponseR]{mrCA}} used with ellipse=TRUE is that the total bootstrap procedure takes into account the subject structure of sensory data in \code{\link[MultiResponseR]{sensory.mrCA}}
+This function performs the MR-CA of the data as well as the total bootstrap procedure (Cadoret & Husson, 2013) and the pairwise total bootstrap tests (Mahieu, Visalli, Thomas, & Schlich, 2020). The difference with \code{\link[MultiResponseR]{mrCA}} used with ellipse=TRUE is that the total bootstrap procedure takes into account the subject structure of sensory data in \code{\link[MultiResponseR]{sensory.mrCA}}
 }
 \details{
 \itemize{
-\item \strong{nbaxes.sig}: The number of significant axes determines the number of axes accounted for while performing the Procrustes rotations of the total bootstrap procedure (Mahieu, Visalli, & Schlich, 2020). These same axes are accounted for the pairwise total bootstrap tests.
+\item \strong{nbaxes.sig}: The number of significant axes determines the number of axes accounted for while performing the Procrustes rotations of the total bootstrap procedure (Mahieu, Schlich, Visalli, & Cardot, 2021). These same axes are accounted for the pairwise total bootstrap tests.
 \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nboot} datasets are generated.
 }
 }
@@ -51,8 +51,6 @@ plt.mrCA(res)
 Cadoret, M., & Husson, F. (2013). Construction and evaluation of confidence ellipses applied at sensory data. Food Quality and Preference, 28(1), 106-115.
 
 Mahieu, B., Visalli, M., Thomas, A., & Schlich, P. (2020). Free-comment outperformed check-all-that-apply in the sensory characterisation of wines with consumers at home. Food Quality and Preference, 84.
-
-Mahieu, B., Visalli, M., & Schlich, P. (2020). Accounting for the dimensionality of the dependence in analyses of contingency tables obtained with Check-All-That-Apply and Free-Comment. Food Quality and Preference, 83.
 
 Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
 }

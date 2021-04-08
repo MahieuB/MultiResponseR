@@ -1,5 +1,6 @@
 #' @keywords internal
 #' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+#' @references Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
 #' @seealso \code{\link[MultiResponseR]{mr.chisq.test}}
 #' @seealso \code{\link[MultiResponseR]{mr.dimensionality.test}}
 #' @seealso \code{\link[MultiResponseR]{mr.sig.cell}}

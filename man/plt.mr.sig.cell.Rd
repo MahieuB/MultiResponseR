@@ -57,6 +57,3 @@ res=sensory.mr.sig.cell(milkchoc,nbaxes.sig=dim.sig)
 
 plt.mr.sig.cell(res)
 }
-\references{
-Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
-}

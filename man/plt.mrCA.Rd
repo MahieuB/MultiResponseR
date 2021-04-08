@@ -42,7 +42,7 @@ plt.mrCA(
 \item{title}{An optional title to be added to the plot}
 }
 \value{
-An mrCA factor map
+A MR-CA factor map
 
 
 }

@@ -35,12 +35,12 @@ A list with the following elements:
 }
 }
 \description{
-This function performs the tests per cell as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random hypergeometric samplings to estimate the null distribution. For each cell, a test is performed to investigate if the observed value significantly differs from the expected value under the null hypothesis of no associations between categories and response options. The test performed for each cell results of the adaptation of the chi-square per cell test described in Symoneaux, Galmarini, and Mehinagic (2012) from the usual chi-square framework to the modified chi-square framework introduced in Loughin and Scherer (1998)
+This function performs for each pair of category and response option a multiple-response hypergeometric test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random hypergeometric samplings to estimate the null distribution
 }
 \details{
 \itemize{
 \item \strong{nsample}: The distribution of the value under the null hypothesis of no associations between categories and response options is estimated using \emph{nsample} datasets generated thanks to random hypergeometric samplings of the response vectors along observations.
-\item \strong{nbaxes.sig}: If \emph{nbaxes.sig} is lower than the total number of axes then the tests are performed on the derived contingency table corresponding to significant axes (Mahieu, Visalli, & Schlich, 2020; Mahieu, Schlich, Visalli, & Cardot, 2020). This table is obtained by reversing mrCA computations on the first \emph{nbaxes.sig} axes.
+\item \strong{nbaxes.sig}: If \emph{nbaxes.sig} is lower than the total number of axes then the tests are performed on the derived contingency table corresponding to significant axes (Mahieu, Schlich, Visalli, & Cardot, 2020). This table is obtained by using the reconstitution formula of MR-CA on the first \emph{nbaxes.sig} axes.
 \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nsample} datasets are generated.
 }
 }
@@ -61,11 +61,7 @@ res=mr.sig.cell(dset)
 plt.mr.sig.cell(res)
 }
 \references{
-Symoneaux, R., Galmarini, M. V., & Mehinagic, E. (2012). Comment analysis of consumer’s likes and dislikes as an alternative tool to preference mapping. A case study on apples. Food Quality and Preference, 24(1), 59-66.
-
 Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
-
-Mahieu, B., Visalli, M., & Schlich, P. (2020). Accounting for the dimensionality of the dependence in analyses of contingency tables obtained with Check-All-That-Apply and Free-Comment. Food Quality and Preference, 83.
 
 Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
 }

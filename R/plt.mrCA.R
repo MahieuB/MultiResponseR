@@ -20,7 +20,7 @@
 #' }
 #'
 #'
-#' @return An mrCA factor map
+#' @return A MR-CA factor map
 #'
 #' @import FactoMineR
 #' @import graphics

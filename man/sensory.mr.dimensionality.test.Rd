@@ -24,7 +24,7 @@ A list with the following elements:
 }
 }
 \description{
-Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random permutations to estimate the null distribution. This test results of the transposition of the dimensionality test introduced in Mahieu, Visalli, and Schlich (2020) from the usual chi-square framework to the modified chi-square framework introduced in Loughin and Scherer (1998). The difference with \code{\link[MultiResponseR]{mr.dimensionality.test}} is that random permutations are performed within subjects rather than along all evaluations
+Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random permutations to estimate the null distribution. The difference with \code{\link[MultiResponseR]{mr.dimensionality.test}} is that random permutations are performed within subjects rather than along all evaluations
 }
 \details{
 \itemize{
@@ -41,8 +41,6 @@ sensory.mr.dimensionality.test(milkchoc)
 }
 \references{
 Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
-
-Mahieu, B., Visalli, M., & Schlich, P. (2020). Accounting for the dimensionality of the dependence in analyses of contingency tables obtained with Check-All-That-Apply and Free-Comment. Food Quality and Preference, 83.
 
 Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
 }

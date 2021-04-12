@@ -263,6 +263,8 @@ plt.mrCA=function(res,
     }
 
   }
-  p=p+geom_label_repel(as.data.frame(lab),mapping=aes(x=lab[,1],y=lab[,2],label=rownames(lab)),label.size=NA,colour=col.lab,size=size.lab,segment.size=1,label.padding = 0)
+  nudge=lab*0.001
+  p=p+geom_label_repel(as.data.frame(lab),mapping=aes(x=lab[,1],y=lab[,2],label=rownames(lab)),label.size=NA,colour=col.lab,size=size.lab,segment.size=1,label.padding = 0,
+                       nudge_x = nudge[,1],nudge_y = nudge[,2],min.segment.length = 1)
   return(p)
 }

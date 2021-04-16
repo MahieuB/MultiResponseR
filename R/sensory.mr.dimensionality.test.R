@@ -1,6 +1,6 @@
 #' Multiple-response dimensionality test for sensory data
 #'
-#' @description Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random permutations to estimate the null distribution. The difference with \code{\link[MultiResponseR]{mr.dimensionality.test}} is that random permutations are performed within subjects rather than along all evaluations
+#' @description Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, Visalli, and Cardot (2021) using random permutations to estimate the null distribution. The difference with \code{\link[MultiResponseR]{mr.dimensionality.test}} is that random permutations are performed within subjects rather than along all evaluations
 #'
 #' @param data A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
@@ -20,7 +20,7 @@
 #'   \item{p.values}{P-value of the test of each dimension adjusted for closed testing procedure}
 #' }
 #' @references Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
-#' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+#' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 #' @export
 #'
 #' @import parallel

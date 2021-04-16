@@ -1,11 +1,11 @@
-#' Plot factor plan resulting from multiple-response Correspondence Analysis (mrCA)
+#' Plot factor plan resulting from multiple-response Correspondence Analysis (MR-CA)
 #'
 #' @description This function plots the results coming from \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}}
 #'
 #' @param res A list returned by \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}}
-#' @param axes Which dimensions of the mrCA should be plotted?
-#' @param alpha.total.bootstrap.test The alpha risk of the total bootstrap tests. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE. See details
-#' @param alpha.ellipse The alpha risk of the confidence ellipses. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE
+#' @param axes Which dimensions of the MR-CA should be plotted?
+#' @param alpha.total.bootstrap.test The alpha risk of the total bootstrap tests. Only useful if the MR-CA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE. See details
+#' @param alpha.ellipse The alpha risk of the confidence ellipses. Only useful if the MR-CA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE
 #' @param select.desc.rep A character vector specifying the descriptors/response options to plot. By default, all descriptors/response options are plotted
 #' @param rev.x Should the horizontal plotted dimension be reversed? Useful in case of map comparisons to align products/categories
 #' @param rev.y Should the vertical plotted dimension be reversed? Useful in case of map comparisons to align products/categories

@@ -35,12 +35,12 @@ A list with the following elements:
 }
 }
 \description{
-This function performs for each pair of product and descriptor a multiple-response hypergeometric test as defined in Mahieu, Schlich, Visalli, and Cardot (2020) using random hypergeometric samplings to estimate the null distribution. The difference with \code{\link[MultiResponseR]{mr.sig.cell}} is that random hypergeometric samplings are performed taking into account the subject structure of sensory data in \code{\link[MultiResponseR]{sensory.mr.sig.cell}}
+This function performs for each pair of product and descriptor a multiple-response hypergeometric test as defined in Mahieu, Schlich, Visalli, and Cardot (2021) using random hypergeometric samplings to estimate the null distribution. The difference with \code{\link[MultiResponseR]{mr.sig.cell}} is that random hypergeometric samplings are performed taking into account the subject structure of sensory data in \code{\link[MultiResponseR]{sensory.mr.sig.cell}}
 }
 \details{
 \itemize{
 \item \strong{nsample}: The distribution of the value under the null hypothesis of no associations between products and descriptors is estimated using \emph{nsample} datasets generated thanks to random hypergeometric samplings of the response vectors along products within subjects.
-\item \strong{nbaxes.sig}: If \emph{nbaxes.sig} is lower than the total number of axes then the tests are performed on the derived contingency table corresponding to significant axes (Mahieu, Schlich, Visalli, & Cardot, 2020) This table is obtained by using the reconstitution formula of MR-CA on the first \emph{nbaxes.sig} axes.
+\item \strong{nbaxes.sig}: If \emph{nbaxes.sig} is lower than the total number of axes then the tests are performed on the derived contingency table corresponding to significant axes (Mahieu, Schlich, Visalli, & Cardot, 2021) This table is obtained by using the reconstitution formula of MR-CA on the first \emph{nbaxes.sig} axes.
 \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nsample} datasets are generated.
 }
 }
@@ -58,5 +58,5 @@ plt.mr.sig.cell(res)
 \references{
 Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
 
-Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 }

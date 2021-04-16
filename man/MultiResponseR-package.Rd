@@ -6,10 +6,10 @@
 \alias{MultiResponseR-package}
 \title{MultiResponseR: Analysis of multiple-response contingency data}
 \description{
-This package implements the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2020) for the analysis of contingency data obtained from multiple-response questionnaires. The multiple-response framework notably includes a multiple-response chi-square test and a multiple-response correspondence analysis. Two types of cases are distinguished: a general case where one subject contributes only to one category and the particular case of sensory data (notably Check-All-That-Apply and Free-Comment) where one subject contributes to several categories (products).
+This package implements the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2021) for the analysis of contingency data obtained from multiple-response questionnaires. The multiple-response framework notably includes a multiple-response chi-square test and a multiple-response correspondence analysis. Two types of cases are distinguished: a general case where one subject contributes only to one category and the particular case of sensory data (notably Check-All-That-Apply and Free-Comment) where one subject contributes to several categories (products).
 }
 \references{
-Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 
 Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
 }

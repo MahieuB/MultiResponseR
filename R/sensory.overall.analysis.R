@@ -1,4 +1,4 @@
-#' Overall analysis of multiple-response sensory data using the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2020)
+#' Overall analysis of multiple-response sensory data using the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2021)
 #'
 #' @description Successively performs \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}, \code{\link[MultiResponseR]{sensory.mrCA}} and \code{\link[MultiResponseR]{sensory.mr.sig.cell}}
 #'
@@ -26,7 +26,7 @@
 #' @import FactoMineR
 #' @import stats
 #'
-#' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+#' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 #'
 #'
 #' @examples

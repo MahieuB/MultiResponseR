@@ -2,7 +2,7 @@
 % Please edit documentation in R/plt.mrCA.R
 \name{plt.mrCA}
 \alias{plt.mrCA}
-\title{Plot factor plan resulting from multiple-response Correspondence Analysis (mrCA)}
+\title{Plot factor plan resulting from multiple-response Correspondence Analysis (MR-CA)}
 \usage{
 plt.mrCA(
   res,
@@ -21,11 +21,11 @@ plt.mrCA(
 \arguments{
 \item{res}{A list returned by \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}}}
 
-\item{axes}{Which dimensions of the mrCA should be plotted?}
+\item{axes}{Which dimensions of the MR-CA should be plotted?}
 
-\item{alpha.total.bootstrap.test}{The alpha risk of the total bootstrap tests. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE. See details}
+\item{alpha.total.bootstrap.test}{The alpha risk of the total bootstrap tests. Only useful if the MR-CA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE. See details}
 
-\item{alpha.ellipse}{The alpha risk of the confidence ellipses. Only useful if the mrCA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE}
+\item{alpha.ellipse}{The alpha risk of the confidence ellipses. Only useful if the MR-CA was computed using \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}} and ellipse=TRUE}
 
 \item{select.desc.rep}{A character vector specifying the descriptors/response options to plot. By default, all descriptors/response options are plotted}
 

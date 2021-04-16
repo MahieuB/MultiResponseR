@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensory.overall.analysis.R
 \name{sensory.overall.analysis}
 \alias{sensory.overall.analysis}
-\title{Overall analysis of multiple-response sensory data using the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2020)}
+\title{Overall analysis of multiple-response sensory data using the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2021)}
 \usage{
 sensory.overall.analysis(
   data,
@@ -42,5 +42,5 @@ parallel::detectCores()
 sensory.overall.analysis(milkchoc)
 }
 \references{
-Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 }

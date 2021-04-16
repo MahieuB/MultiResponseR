@@ -15,7 +15,7 @@
 #'
 #' @return A list with the following elements:
 #' \describe{
-#'   \item{eigen}{Eigenvalues of the mrCA and their corresponding percentages of inertia}
+#'   \item{eigen}{Eigenvalues of the MR-CA and their corresponding percentages of inertia}
 #'   \item{row.coord}{Products coordinates}
 #'   \item{col.coord}{Descriptors coordinates}
 #'   \item{svd}{Results of the singular value decomposition}
@@ -26,7 +26,7 @@
 #'
 #' @references Cadoret, M., & Husson, F. (2013). Construction and evaluation of confidence ellipses applied at sensory data. Food Quality and Preference, 28(1), 106-115.
 #' @references Mahieu, B., Visalli, M., Thomas, A., & Schlich, P. (2020). Free-comment outperformed check-all-that-apply in the sensory characterisation of wines with consumers at home. Food Quality and Preference, 84.
-#' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2020). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Manuscript submitted for publication.
+#' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 #'
 #' @import parallel
 #' @import doParallel

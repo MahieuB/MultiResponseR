@@ -66,7 +66,7 @@ plt.mrCA=function(res,
                   rev.x = FALSE,
                   rev.y = FALSE,
                   size.points = 3.5,
-                  size.lab = 5,
+                  size.lab = 6,
                   expansion = 1.25,
                   title = NULL){
   classe=class(res)
@@ -186,7 +186,7 @@ plt.mrCA=function(res,
 
   if (!is.null(res$bootstrap.replicate.coord)){
 
-    p=p+geom_path(data=as.data.frame(ell),aes(x=ell[,2],y=ell[,3],group=ell[,1]),colour="blue",size=1.3)
+    p=p+geom_path(data=as.data.frame(ell),aes(x=ell[,2],y=ell[,3],group=ell[,1]),colour="blue",size=1)
 
     diff.test=res$total.bootstrap.test.pvalues
 
@@ -220,7 +220,7 @@ plt.mrCA=function(res,
     }
   }
 
-  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.5, "cm")), colour=col.fleche,size=1.2)
+  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,size=1)
 
   df.point=res$row.coord[,axes,drop=FALSE]
   col.point=rep("blue",nrow(res$row.coord))

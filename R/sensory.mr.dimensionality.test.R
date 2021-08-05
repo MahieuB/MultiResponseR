@@ -112,7 +112,11 @@ sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
 
     for(s.perm in levels(virt.data$sujet)){
       l.s=which(virt.data$sujet==s.perm)
-      loto=sample(l.s,length(l.s),replace = FALSE)
+      if (length(l.s)==1){
+        loto=l.s
+      }else{
+        loto=sample(l.s,length(l.s),replace = FALSE)
+      }
       virt.data$produit[l.s]=virt.data$produit[loto]
     }
 

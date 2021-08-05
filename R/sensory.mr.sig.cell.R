@@ -149,7 +149,11 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,nc
 
     for(s.perm in levels(virt.data$sujet)){
       l.s=which(virt.data$sujet==s.perm)
-      loto=sample(l.s,length(l.s),replace = TRUE)
+      if (length(l.s)==1){
+        loto=l.s
+      }else{
+        loto=sample(l.s,length(l.s),replace = TRUE)
+      }
       virt.data[l.s,3:ncol(virt.data)]=virt.data[loto,3:ncol(virt.data)]
     }
 

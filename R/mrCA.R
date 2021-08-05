@@ -222,7 +222,11 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
       vec.ligne=NULL
       for (boot.cat in levels(data$cat)){
         les.ligne=which(data$cat==boot.cat)
-        loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+        if (length(les.ligne)==1){
+          loto=les.ligne
+        }else{
+          loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+        }
         vec.ligne=c(vec.ligne,loto)
       }
 

@@ -6,25 +6,34 @@
 \usage{
 plt.mr.sig.cell(
   res,
-  alpha = 0.05,
+  alpha.1 = 0.05,
+  alpha.2 = 0.15,
   choice = "percent.derived.cont",
-  col.greater = "green3",
-  col.lower = "orangered"
+  col.greater.1 = "green3",
+  col.lower.1 = "orangered",
+  col.greater.2 = "lightgreen",
+  col.lower.2 = "lightsalmon"
 )
 }
 \arguments{
 \item{res}{A list returned by \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}}
 
-\item{alpha}{The alpha risk to consider the tests as significant}
+\item{alpha.1}{The alpha risk to consider the tests as significant}
+
+\item{alpha.2}{The alpha risk to consider the tests as showing a trend. If trends are not to be considered, \emph{alpha.2} can be set to 0}
 
 \item{choice}{Which table from \emph{res} should be plotted? Default is percent.derived.cont}
 
-\item{col.greater}{The color used to highlight significant positive associations}
+\item{col.greater.1}{The color used to highlight significant positive associations}
 
-\item{col.lower}{The color used to highlight significant negative associations}
+\item{col.lower.1}{The color used to highlight significant negative associations}
+
+\item{col.greater.2}{The color used to highlight positive associations showing a trend}
+
+\item{col.lower.2}{The color used to highlight negative associations showing a trend}
 }
 \value{
-A table with significant cells highlighted
+A table with cells highlighted
 }
 \description{
 This function plots the results coming from \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}

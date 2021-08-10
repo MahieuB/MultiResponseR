@@ -42,7 +42,7 @@ sensory.overall.analysis=function(data,nMC=2000,alpha=0.05,cell.two.sided=FALSE,
   p=plt.mrCA(res.ca,alpha.total.bootstrap.test=alpha,alpha.ellipse=alpha)
   print(p)
   res.cell=sensory.mr.sig.cell(data,nsample=nMC,nbaxes.sig=dim.sig,two.sided=cell.two.sided,ncores=ncores)
-  g=plt.mr.sig.cell(res.cell,alpha = alpha)
+  g=plt.mr.sig.cell(res.cell,alpha.1=alpha,alpha.2=0)
   print(g)
   stopImplicitCluster()
 }

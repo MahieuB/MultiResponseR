@@ -3,13 +3,16 @@
 #' @description This function plots the results coming from \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}
 #'
 #' @param res A list returned by \code{\link[MultiResponseR]{sensory.mr.sig.cell}} or \code{\link[MultiResponseR]{mr.sig.cell}}
-#' @param alpha The alpha risk to consider the tests as significant
+#' @param alpha.1 The alpha risk to consider the tests as significant
+#' @param alpha.2 The alpha risk to consider the tests as showing a trend. If trends are not to be considered, \emph{alpha.2} can be set to 0
 #' @param choice Which table from \emph{res} should be plotted? Default is percent.derived.cont
-#' @param col.greater The color used to highlight significant positive associations
-#' @param col.lower The color used to highlight significant negative associations
+#' @param col.greater.1 The color used to highlight significant positive associations
+#' @param col.lower.1 The color used to highlight significant negative associations
+#' @param col.greater.2 The color used to highlight positive associations showing a trend
+#' @param col.lower.2 The color used to highlight negative associations showing a trend
 #'
 #'
-#' @return A table with significant cells highlighted
+#' @return A table with cells highlighted
 #'
 #' @export
 #'
@@ -44,7 +47,7 @@
 #'res=sensory.mr.sig.cell(milkchoc,nbaxes.sig=dim.sig)
 #'
 #'plt.mr.sig.cell(res)
-plt.mr.sig.cell=function(res,alpha=0.05,choice="percent.derived.cont",col.greater="green3",col.lower="orangered"){
+plt.mr.sig.cell=function(res,alpha.1=0.05,alpha.2=0.15,choice="percent.derived.cont",col.greater.1="green3",col.lower.1="orangered",col.greater.2="lightgreen",col.lower.2="lightsalmon"){
   classe=class(res)
   if(classe!="list"){
     stop("res must be a list resulting from the execution of sensory.mr.sig.cell or mr.sig.cell")
@@ -62,16 +65,21 @@ plt.mr.sig.cell=function(res,alpha=0.05,choice="percent.derived.cont",col.greate
   mat.exp=res$null.cont
   mat.obs=res$derived.cont
 
-  plot.col=plot.mat
+  plot.col=as.data.frame(matrix("white",nrow(plot.mat),ncol(plot.mat)))
 
   for (i in 1:nrow(plot.col)){
     for(j in 1:ncol(plot.col)){
-      if(mat.pval[i,j]<=alpha & mat.obs[i,j]>mat.exp[i,j]){
-        plot.col[i,j]=col.greater
-      }else if (mat.pval[i,j]<=alpha & mat.obs[i,j]<mat.exp[i,j]){
-        plot.col[i,j]=col.lower
-      }else{
-        plot.col[i,j]="white"
+      if(mat.pval[i,j]<=alpha.2 & mat.obs[i,j]>mat.exp[i,j]){
+        plot.col[i,j]=col.greater.2
+      }
+      if(mat.pval[i,j]<=alpha.1 & mat.obs[i,j]>mat.exp[i,j]){
+        plot.col[i,j]=col.greater.1
+      }
+      if (mat.pval[i,j]<=alpha.2 & mat.obs[i,j]<mat.exp[i,j]){
+        plot.col[i,j]=col.lower.2
+      }
+      if (mat.pval[i,j]<=alpha.1 & mat.obs[i,j]<mat.exp[i,j]){
+        plot.col[i,j]=col.lower.1
       }
     }
   }

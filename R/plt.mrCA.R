@@ -171,10 +171,7 @@ plt.mrCA=function(res,
     ymax=max(ymax,max(res$proj.col.coord[,axes[2]]))
   }
 
-  xmin=xmin*1.1
-  xmax=xmax*1.1
-  ymin=ymin*1.1
-  ymax=ymax*1.1
+
 
   pmin=min(xmin,ymin)
   pmax=max(xmax,ymax)

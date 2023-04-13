@@ -38,6 +38,7 @@
 #'
 #' @export
 #'
+#'
 #' @import parallel
 #' @import doParallel
 #' @import foreach

@@ -22,14 +22,15 @@
 #'
 #' @return A MR-CA factor map
 #'
+#'
+#' @export
+#'
 #' @import FactoMineR
 #' @import graphics
 #' @import stats
 #' @import ggplot2
 #' @import ggrepel
 #'
-#' @return
-#' @export
 #'
 #' @examples
 #' # non-sensory example
@@ -173,17 +174,17 @@ plt.mrCA=function(res,
 
 
 
-  pmin=min(xmin,ymin)
-  pmax=max(xmax,ymax)
+  pmin=min(xmin,ymin)*1.05
+  pmax=max(xmax,ymax)*1.05
 
   p=ggplot(as.data.frame(res$row.coord),aes(x=res$row.coord[,axes[1]],y=res$row.coord[,axes[2]]))+theme_bw()
   p=p+xlim(pmin,pmax)+ylim(pmin,pmax)+xlab(paste("Dim ",axes[1]," (",round(res$eigen[axes[1],2],2)," %)",sep=""))+ylab(paste("Dim ",axes[2]," (",round(res$eigen[axes[2],2],2)," %)",sep=""))+ggtitle(title)
   p=p+theme(axis.title.x = element_text(size = 16,face = "bold"),axis.title.y = element_text(size = 16,face = "bold"),plot.title = element_text(hjust = 0.5,face = "bold",size=20))
-  p=p+geom_hline(yintercept=0,linetype="dashed",size=1)+geom_vline(xintercept=0,linetype="dashed",size=1)
+  p=p+geom_hline(yintercept=0,linetype="dashed",linewidth=1)+geom_vline(xintercept=0,linetype="dashed",linewidth=1)
 
   if (!is.null(res$bootstrap.replicate.coord)){
 
-    p=p+geom_path(data=as.data.frame(ell),aes(x=ell[,2],y=ell[,3],group=ell[,1]),colour="blue",size=1)
+    p=p+geom_path(data=as.data.frame(ell),aes(x=ell[,2],y=ell[,3],group=ell[,1]),colour="blue",linewidth=1)
 
     diff.test=res$total.bootstrap.test.pvalues
 
@@ -204,7 +205,7 @@ plt.mrCA=function(res,
     }
     if (!is.null(df.segment)){
       colnames(df.segment)=as.character(1:ncol(df.segment))
-      p=p+geom_segment(data=as.data.frame(df.segment),aes(x = df.segment[,1], y = df.segment[,2], xend = df.segment[,3], yend = df.segment[,4]),colour="blue",size=1.3)
+      p=p+geom_segment(data=as.data.frame(df.segment),aes(x = df.segment[,1], y = df.segment[,2], xend = df.segment[,3], yend = df.segment[,4]),colour="blue",linewidth=1.3)
     }
   }
 
@@ -217,7 +218,7 @@ plt.mrCA=function(res,
     }
   }
 
-  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,size=1)
+  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
 
   df.point=res$row.coord[,axes,drop=FALSE]
   col.point=rep("blue",nrow(res$row.coord))

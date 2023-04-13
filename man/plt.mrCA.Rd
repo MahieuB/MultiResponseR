@@ -43,8 +43,6 @@ plt.mrCA(
 }
 \value{
 A MR-CA factor map
-
-
 }
 \description{
 This function plots the results coming from \code{\link[MultiResponseR]{sensory.mrCA}} or \code{\link[MultiResponseR]{mrCA}}

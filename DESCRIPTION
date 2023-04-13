@@ -1,6 +1,6 @@
 Package: MultiResponseR
 Title: Analysis of multiple-response contingency data
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     c(person(given = "Benjamin",family = "Mahieu",role = c("aut","cre"),email = "benjaminmahieu@yahoo.com"),
     person(given = "Michel",family = "Visalli",role = c("ctb"),email = "michel.visalli@inrae.fr",comment="Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte"),
@@ -11,7 +11,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0.0)
 Imports: 

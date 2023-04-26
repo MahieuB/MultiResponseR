@@ -35,12 +35,12 @@ Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency 
 \code{\link[MultiResponseR]{sensory.overall.analysis}}
 }
 \author{
-\strong{Maintainer}: Benjamin Mahieu \email{benjaminmahieu@yahoo.com}
+\strong{Maintainer}: Benjamin Mahieu \email{benjamin.mahieu@oniris-nantes.fr}
 
 Other contributors:
 \itemize{
-  \item Michel Visalli \email{michel.visalli@inrae.fr} (Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte) [contributor]
-  \item Herve Cardot \email{herve.cardot@u-bourgogne.fr} (Institut de Mathematiques de Bourgogne, CNRS, Universite Bourgogne Franche-Comte) [contributor, thesis advisor]
+  \item Michel Visalli \email{michel.visalli@inrae.fr} (Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte) [thesis advisor]
+  \item Herve Cardot \email{herve.cardot@u-bourgogne.fr} (Institut de Mathematiques de Bourgogne, CNRS, Universite Bourgogne Franche-Comte) [thesis advisor]
   \item Pascal Schlich \email{pascal.schlich@inrae.fr} (Centre des Sciences du Gout et de l'Alimentation, AgroSup Dijon, CNRS, INRAE, Universite Bourgogne Franche-Comte) [thesis advisor]
 }
 

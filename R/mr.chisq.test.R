@@ -4,7 +4,7 @@
 #'
 #' @param data A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
-#' @param ncores Number of cores used to estimate the null distribution. Default is 2. See details
+#' @param ncores Number of cores used to estimate the null distribution. Default is 2.
 #'
 #' @return A list with the following elements:
 #' \describe{
@@ -14,8 +14,8 @@
 #' @details
 #' \itemize{
 #'   \item \strong{nperm}: The distribution of the statistic under the null hypothesis of no associations between categories and response options is estimated using \emph{nperm} datasets generated thanks to random permutations of the response vectors along observations. Note that this differs from the original proposition of Loughin and Scherer (1998) who used a parametric bootstrap to do so.
-#'   \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nperm} datasets are generated.
 #' }
+#'
 #' @export
 #' @references Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
 #' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
@@ -36,7 +36,6 @@
 #' dset=cbind.data.frame(category,right)
 #' dset$category=as.factor(dset$category)
 #'
-#' parallel::detectCores()
 #'
 #' mr.chisq.test(dset)
 mr.chisq.test=function(data,nperm=2000,ncores=2){

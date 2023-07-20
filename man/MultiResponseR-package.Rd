@@ -22,10 +22,6 @@ Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency 
 
 \code{\link[MultiResponseR]{mrCA}}
 
-\code{\link[MultiResponseR]{plt.mr.sig.cell}}
-
-\code{\link[MultiResponseR]{plt.mrCA}}
-
 \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}
 
 \code{\link[MultiResponseR]{sensory.mr.sig.cell}}

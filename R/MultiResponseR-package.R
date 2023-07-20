@@ -5,8 +5,6 @@
 #' @seealso \code{\link[MultiResponseR]{mr.dimensionality.test}}
 #' @seealso \code{\link[MultiResponseR]{mr.sig.cell}}
 #' @seealso \code{\link[MultiResponseR]{mrCA}}
-#' @seealso \code{\link[MultiResponseR]{plt.mr.sig.cell}}
-#' @seealso \code{\link[MultiResponseR]{plt.mrCA}}
 #' @seealso \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}
 #' @seealso \code{\link[MultiResponseR]{sensory.mr.sig.cell}}
 #' @seealso \code{\link[MultiResponseR]{sensory.mrCA}}

@@ -6,13 +6,12 @@
 #' @param nsample Number of randomly sampled datasets to estimate the distribution of the value under the null hypothesis. See details
 #' @param nbaxes.sig The number of significant axes retuned by \code{\link[MultiResponseR]{mr.dimensionality.test}}. By default, all axes are considered significant. See details
 #' @param two.sided Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
-#' @param ncores Number of cores used to estimate the null distribution. Default is 2. See details
+#' @param ncores Number of cores used to estimate the null distribution. Default is 2.
 #'
 #' @details
 #' \itemize{
 #'   \item \strong{nsample}: The distribution of the value under the null hypothesis of no associations between categories and response options is estimated using \emph{nsample} datasets generated thanks to random hypergeometric samplings of the response vectors along observations.
 #'   \item \strong{nbaxes.sig}: If \emph{nbaxes.sig} is lower than the total number of axes then the tests are performed on the derived contingency table corresponding to significant axes (Mahieu, Schlich, Visalli, & Cardot, 2021). This table is obtained by using the reconstitution formula of MR-CA on the first \emph{nbaxes.sig} axes.
-#'   \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nsample} datasets are generated.
 #' }
 #'
 #' @return A list with the following elements:
@@ -49,11 +48,9 @@
 #' dset=cbind.data.frame(category,right)
 #' dset$category=as.factor(dset$category)
 #'
-#' parallel::detectCores()
-#'
 #' res=mr.sig.cell(dset)
 #'
-#' plt.mr.sig.cell(res)
+#' plot(res)
 mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
   classe=class(data)[1]
   if (!classe%in%c("data.frame")){
@@ -236,6 +233,7 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
       }else{
         dvs=diag(vs)
       }
+
       row.coord=(u/sqrt(marge.r))%*%dvs
       col.coord=v
 
@@ -279,8 +277,9 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
       }
 
       percent.eig=eig/sum(eig)*100
-      mat.eig=cbind(eig,percent.eig)
-      colnames(mat.eig)=c("eigenvalue","percentage of inertia")
+      cum.percent.eig=cumsum(percent.eig)
+      mat.eig=cbind(eig,percent.eig,cum.percent.eig)
+      colnames(mat.eig)=c("eigenvalue","percentage of inertia","cumulative percentage of inertia")
       name.dim=paste("Dim.",1:nrow(mat.eig))
       rownames(mat.eig)=colnames(col.coord)=colnames(row.coord)=name.dim
       if(!is.null(proj.row)){
@@ -316,7 +315,11 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
           vec.ligne=NULL
           for (boot.cat in levels(data$cat)){
             les.ligne=which(data$cat==boot.cat)
-            loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+            if (length(les.ligne)==1){
+              loto=les.ligne
+            }else{
+              loto=sample(les.ligne,length(les.ligne),replace = TRUE)
+            }
             vec.ligne=c(vec.ligne,loto)
           }
 
@@ -349,59 +352,35 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
 
           ######
 
-          procrustes <- function(amat, target, orthogonal = FALSE,
-                                 translate = FALSE, magnify = FALSE) {
-            for (i in nrow(amat):1) {
-              if (any(is.na(amat)[i, ]) | any(is.na(target)[i,
-              ])) {
-                amat <- amat[-i, ]
-                target <- target[-i, ]
-              }
+          myProcrustes=function(tofit,target,scaling=FALSE){
+            if (!is.matrix(tofit) & !is.data.frame(tofit)){
+              stop("tofit must be a matrix or a data.frame")
             }
-            dA <- dim(amat)
-            dX <- dim(target)
-            if (length(dA) != 2 || length(dX) != 2)
-              stop("arguments amat and target must be matrices")
-            if (any(dA != dX))
-              stop("dimensions of amat and target must match")
-            if (length(attr(amat, "tmat")))
-              stop("oblique loadings matrix not allowed for amat")
-            if (orthogonal) {
-              if (translate) {
-                p <- dX[1]
-                target.m <- (rep(1/p, p) %*% target)[, ]
-                amat.m <- (rep(1/p, p) %*% amat)[, ]
-                target.c <- scale(target, center = target.m,
-                                  scale = FALSE)
-                amat.c <- scale(amat, center = amat.m, scale = FALSE)
-                j <- svd(crossprod(target.c, amat.c))
-              }
-              else {
-                amat.c <- amat
-                j <- svd(crossprod(target, amat))
-              }
-              rot <- j$v %*% t(j$u)
-              if (magnify)
-                beta <- sum(j$d)/sum(amat.c^2)
-              else beta <- 1
-              B <- beta * amat.c %*% rot
-              if (translate)
-                B <- B + rep(as.vector(target.m), rep.int(p,
-                                                          dX[2]))
-              value <- list(rmat = B, tmat = rot, magnify = beta)
-              if (translate)
-                value$translate <- target.m - (rot %*% amat.m)[,
-                ]
+            X=as.matrix(tofit)
+            X=sweep(X,2,colMeans(X),"-")
+            if (!is.matrix(target) & !is.data.frame(target)){
+              stop("tofit must be a matrix or a data.frame")
             }
-            else {
-              b <- solve(amat, target)
-              gamma <- sqrt(diag(solve(crossprod(b))))
-              rot <- b * rep(gamma, rep.int(dim(b)[1], length(gamma)))
-              B <- amat %*% rot
-              fcor <- solve(crossprod(rot))
-              value <- list(rmat = B, tmat = rot, correlation = fcor)
+            Y=as.matrix(target)
+            if (!is.logical(scaling)){
+              stop("scaling must be logical")
             }
-            return(value)
+            if (ncol(X)!=ncol(Y) | nrow(X)!=nrow(Y)){
+              stop("Dimension of tofit and target are different")
+            }
+            loc=colMeans(Y)
+            Y=sweep(Y,2,colMeans(Y),"-")
+            croise=crossprod(X,Y)
+            udv=svd(croise)
+            if (scaling){
+              dilat=sum(udv$d)/sum(diag(crossprod(X)))
+            }else{
+              dilat=1
+            }
+            H=udv$u%*%t(udv$v)
+            aligned=(dilat*X%*%H)
+            aligned=sweep(aligned,2,loc,"+")
+            return(aligned)
           }
 
           nplusplus.tirage=sum(nplus.tirage)
@@ -423,7 +402,7 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
           row.coord.tirage=row.coord.tirage[,1:nbaxes.proc]
           ######
 
-          rot = procrustes(row.coord.tirage, row.coord, orthogonal = T, translate = T, magnify = F)$rmat
+          rot = myProcrustes(row.coord.tirage, row.coord)
           rot=cbind.data.frame(rownames(rot),rot)
           colnames(rot)[1]="cat"
           return(rot)
@@ -432,20 +411,6 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
         sortie$cat=as.factor(sortie$cat)
         toellipse=sortie
         rownames(toellipse)=as.character(1:nrow(toellipse))
-        centre=row.coord[,1:nbaxes.proc]
-        centre=cbind(as.data.frame(rownames(centre)),centre)
-        colnames(centre)=colnames(toellipse)
-        rownames(centre)=as.character(1:nrow(centre))
-        deltapos=centre
-        deltapos[,2:ncol(deltapos)]=deltapos[,2:ncol(deltapos)]-aggregate(.~cat,toellipse,mean)[,2:ncol(deltapos)]
-        for (p.delta in unique(toellipse$cat)){
-          choix.ligne=rownames(toellipse[toellipse$cat==p.delta,])
-          choix.vec=deltapos[deltapos$cat==p.delta,][,2:ncol(deltapos)]
-          choix.vec.dup=as.data.frame(as.matrix(rep(1,nboot))%*%as.matrix(choix.vec))
-          toellipse[choix.ligne,2:ncol(toellipse)]=toellipse[choix.ligne,2:ncol(toellipse)]+choix.vec.dup
-        }
-        toellipse$cat=as.factor(toellipse$cat)
-        centre$cat=as.factor(centre$cat)
 
         coord.boot=toellipse[,1:(nbaxes.sig+1)]
         dim.sig=nbaxes.sig
@@ -455,58 +420,32 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
         diff.test=as.data.frame(matrix(1,length(les.prod),length(les.prod)))
         colnames(diff.test)=rownames(diff.test)=les.prod
 
-        for(i in 1:nrow(diff.test)){
-          for (j in 1:ncol(diff.test)){
-            if (dim.sig > 1){
-              if (i != j){
-                p.1=rownames(diff.test)[i]
-                p.2=colnames(diff.test)[j]
-                don.coord=coord.boot[coord.boot$cat==p.1 | coord.boot$cat==p.2,]
-                don.coord$cat=as.factor(as.character(don.coord$cat))
-                mod.man=lm(as.matrix(don.coord[,2:ncol(don.coord)])~cat,don.coord)
-                res.can=candisc(mod.man,"cat",type = "3")
-                proj.coord=res.can$scores
-                X=proj.coord[proj.coord$cat==p.1,]
-                Y=proj.coord[proj.coord$cat==p.2,]
-                X$cat=Y$cat=NULL
-                Z=round(X-Y,12)
-                gauche=length(which(Z<=0))
-                droite=length(which(Z>=0))
-                pvalue.test=((min(gauche,droite)+1)/(nboot+1))*2
-                if (pvalue.test>1){
-                  pvalue.test=1
-                }
-                diff.test[p.1,p.2]=pvalue.test
-              }
+        for(i in 1:(nrow(diff.test)-1)){
+          for (j in (i+1):ncol(diff.test)){
+            p.1=rownames(diff.test)[i]
+            p.2=colnames(diff.test)[j]
+            coord.p1=coord.boot[coord.boot$cat==p.1,,drop=FALSE]
+            coord.p2=coord.boot[coord.boot$cat==p.2,,drop=FALSE]
+            delta=as.matrix(coord.p1[,-1,drop=FALSE]-coord.p2[,-1,drop=FALSE])
+            mu=colMeans(delta)
+            sigma=cov(delta)
+            calc.mal.sq=function(vec){
+              mal.bary=t(as.matrix(vec-mu))%*%solve(sigma,tol=1e-300)%*%(as.matrix(vec-mu))
+              return(as.numeric(mal.bary))
             }
-            if (dim.sig==1){
-              if (i != j){
-                p.1=rownames(diff.test)[i]
-                p.2=colnames(diff.test)[j]
-                don.coord=coord.boot[coord.boot$cat==p.1 | coord.boot$cat==p.2,]
-                don.coord$cat=as.factor(as.character(don.coord$cat))
-                X=don.coord[don.coord$cat==p.1,]
-                Y=don.coord[don.coord$cat==p.2,]
-                X$cat=Y$cat=NULL
-                Z=round(X-Y,12)
-                gauche=length(which(Z<=0))
-                droite=length(which(Z>=0))
-                pvalue.test=((min(gauche,droite)+1)/(nboot+1))*2
-                if (pvalue.test>1){
-                  pvalue.test=1
-                }
-                diff.test[p.1,p.2]=pvalue.test
-              }
-            }
+            mal.sq.cloud=apply(as.matrix(delta),1,calc.mal.sq)
+            mal.sq.origin=as.numeric(t(as.matrix(rep(0,length(mu))-mu))%*%solve(sigma)%*%(as.matrix(rep(0,length(mu))-mu)))
+            pvalue.test=(sum(mal.sq.cloud>=mal.sq.origin)+1)/(nrow(delta)+1)
+            diff.test[p.1,p.2]=pvalue.test
+            diff.test[p.2,p.1]=pvalue.test
           }
         }
-
-
       }else{
         toellipse=NULL
         diff.test=NULL
       }
       back=list(eigen=mat.eig,row.coord=row.coord,col.coord=col.coord,proj.row.coord=proj.row.coord,proj.col.coord=proj.col.coord,svd=list(u=u,vs=vs,v=v),bootstrap.replicate.coord=toellipse,total.bootstrap.test.pvalues=diff.test)
+      class(back)=c("mrCA","list")
       return(back)
     }
 
@@ -583,6 +522,7 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE,ncores=2){
 
 
   stopImplicitCluster()
+  class(back)=c("mr.sig.cell","list")
   return(back)
 }
 

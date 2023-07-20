@@ -5,13 +5,9 @@
 #' @param data A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor
 #' @param nMC Number of Monte-Carlo simulations to consider at each step of the overall analysis
 #' @param alpha The alpha risk to consider at each step of the overall analysis
-#' @param cell.two.sided Logical. Should the multiple-response tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
-#' @param ncores Number of cores used in the Monte-Carlo simulations. Default is 2. See details
+#' @param cell.two.sided Logical. Should the multiple-response hypergeometric tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
+#' @param ncores Number of cores used in the Monte-Carlo simulations. Default is 2.
 #'
-#' @details
-#' \itemize{
-#'   \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the simulations are over.
-#' }
 #'
 #' @return The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted
 #' @export
@@ -22,7 +18,6 @@
 #' @import flextable
 #' @import officer
 #' @import abind
-#' @importFrom candisc candisc
 #' @import FactoMineR
 #' @import stats
 #'
@@ -32,17 +27,15 @@
 #' @examples
 #'data(milkchoc)
 #'
-#'parallel::detectCores()
-#'
 #'sensory.overall.analysis(milkchoc)
 sensory.overall.analysis=function(data,nMC=2000,alpha=0.05,cell.two.sided=FALSE,ncores=2){
   res.dim=sensory.mr.dimensionality.test(data,nperm=nMC,alpha=alpha,ncores=ncores)
   dim.sig=res.dim$dim.sig
   res.ca=sensory.mrCA(data,nboot=nMC,nbaxes.sig=dim.sig,ncores=ncores)
-  p=plt.mrCA(res.ca,alpha.total.bootstrap.test=alpha,alpha.ellipse=alpha)
+  p=plot(res.ca,alpha.total.bootstrap.test=alpha,alpha.ellipse=alpha)
   print(p)
   res.cell=sensory.mr.sig.cell(data,nsample=nMC,nbaxes.sig=dim.sig,two.sided=cell.two.sided,ncores=ncores)
-  g=plt.mr.sig.cell(res.cell,alpha.1=alpha,alpha.2=0)
+  g=plot(res.cell,alpha.1=alpha,alpha.2=0)
   print(g)
   stopImplicitCluster()
 }

@@ -13,7 +13,7 @@ sensory.mr.dimensionality.test(data, nperm = 2000, alpha = 0.05, ncores = 2)
 
 \item{alpha}{The alpha risk of the test}
 
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2. See details}
+\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:
@@ -29,13 +29,10 @@ Performs a multiple-response dimensionality test as defined in Mahieu, Schlich, 
 \details{
 \itemize{
 \item \strong{nperm}: The distribution of the statistic under the null hypothesis of no associations between products and descriptors is estimated using \emph{nperm} datasets generated thanks to random permutations of the response vectors along products within subjects.
-\item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nperm} datasets are generated.
 }
 }
 \examples{
 data(milkchoc)
-
-parallel::detectCores()
 
 sensory.mr.dimensionality.test(milkchoc)
 }

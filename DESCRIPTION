@@ -1,6 +1,6 @@
 Package: MultiResponseR
 Title: Analysis of Data from Multiple-Response Questionnaires
-Version: 1.0.1
+Version: 1.5.0
 Authors@R: 
     person(given = "Benjamin",family = "Mahieu",role = c("aut","cre"),email = "benjamin.mahieu@oniris-nantes.fr")
 Description: Implements the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2021).
@@ -19,7 +19,6 @@ Imports:
     doParallel,
     foreach,
     iterators,
-    candisc,
     flextable,
     officer,
     abind,

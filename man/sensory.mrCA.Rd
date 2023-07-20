@@ -13,44 +13,41 @@ sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf, ncores = 2)
 
 \item{nbaxes.sig}{The number of significant axes retuned by \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}. By default, all axes are considered significant. See details}
 
-\item{ncores}{Number of cores used to generate the virtual panels. Default is 2. See details}
+\item{ncores}{Number of cores used to generate the virtual panels. Default is 2.}
 }
 \value{
 A list with the following elements:
 \describe{
 \item{eigen}{Eigenvalues of the MR-CA and their corresponding percentages of inertia}
-\item{row.coord}{Products coordinates}
-\item{col.coord}{Descriptors coordinates}
+\item{prod.coord}{Products coordinates}
+\item{desc.coord}{Descriptors coordinates}
 \item{svd}{Results of the singular value decomposition}
 \item{bootstrap.replicate.coord}{Coordinates of the rotated bootstrap replicates}
 \item{total.bootstrap.test.pvalues}{P-values of the pairwise total bootstrap tests}
 }
 }
 \description{
-This function performs the MR-CA of the data as well as the total bootstrap procedure (Cadoret & Husson, 2013) and the pairwise total bootstrap tests (Mahieu, Visalli, Thomas, & Schlich, 2020). The difference with \code{\link[MultiResponseR]{mrCA}} used with ellipse=TRUE is that the total bootstrap procedure takes into account the subject structure of sensory data in \code{\link[MultiResponseR]{sensory.mrCA}}
+This function performs the MR-CA of the data as well as the total bootstrap procedure (Cadoret & Husson, 2013) and the pairwise total bootstrap tests as proposed in Castura et al. (2023). The difference with \code{\link[MultiResponseR]{mrCA}} used with ellipse=TRUE is that the total bootstrap procedure is stratified with respect to subjects in \code{\link[MultiResponseR]{sensory.mrCA}}
 }
 \details{
 \itemize{
 \item \strong{nbaxes.sig}: The number of significant axes determines the number of axes accounted for while performing the Procrustes rotations of the total bootstrap procedure (Mahieu, Schlich, Visalli, & Cardot, 2021). These same axes are accounted for the pairwise total bootstrap tests.
-\item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nboot} datasets are generated.
 }
 }
 \examples{
 
 data(milkchoc)
 
-parallel::detectCores()
-
 dim.sig=sensory.mr.dimensionality.test(milkchoc)$dim.sig
 
 res=sensory.mrCA(milkchoc,nbaxes.sig=dim.sig)
 
-plt.mrCA(res)
+plot(res)
 }
 \references{
 Cadoret, M., & Husson, F. (2013). Construction and evaluation of confidence ellipses applied at sensory data. Food Quality and Preference, 28(1), 106-115.
 
-Mahieu, B., Visalli, M., Thomas, A., & Schlich, P. (2020). Free-comment outperformed check-all-that-apply in the sensory characterisation of wines with consumers at home. Food Quality and Preference, 84.
+Castura, J. C., Varela, P., & Næs, T. (2023). Evaluation of complementary numerical and visual approaches for investigating pairwise comparisons after principal component analysis. Food Quality and Preference, 107.
 
 Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 }

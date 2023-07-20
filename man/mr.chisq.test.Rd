@@ -11,7 +11,7 @@ mr.chisq.test(data, nperm = 2000, ncores = 2)
 
 \item{nperm}{Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details}
 
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2. See details}
+\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:
@@ -26,7 +26,6 @@ Performs a multiple-response chi-square test as defined in Loughin and Scherer (
 \details{
 \itemize{
 \item \strong{nperm}: The distribution of the statistic under the null hypothesis of no associations between categories and response options is estimated using \emph{nperm} datasets generated thanks to random permutations of the response vectors along observations. Note that this differs from the original proposition of Loughin and Scherer (1998) who used a parametric bootstrap to do so.
-\item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nperm} datasets are generated.
 }
 }
 \examples{
@@ -39,7 +38,6 @@ category=sample(vec.category,nb.obs,replace = TRUE)
 dset=cbind.data.frame(category,right)
 dset$category=as.factor(dset$category)
 
-parallel::detectCores()
 
 mr.chisq.test(dset)
 }

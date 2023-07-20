@@ -21,7 +21,7 @@ mr.sig.cell(
 
 \item{two.sided}{Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
 
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2. See details}
+\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:
@@ -41,7 +41,6 @@ This function performs for each pair of category and response option a multiple-
 \itemize{
 \item \strong{nsample}: The distribution of the value under the null hypothesis of no associations between categories and response options is estimated using \emph{nsample} datasets generated thanks to random hypergeometric samplings of the response vectors along observations.
 \item \strong{nbaxes.sig}: If \emph{nbaxes.sig} is lower than the total number of axes then the tests are performed on the derived contingency table corresponding to significant axes (Mahieu, Schlich, Visalli, & Cardot, 2021). This table is obtained by using the reconstitution formula of MR-CA on the first \emph{nbaxes.sig} axes.
-\item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nsample} datasets are generated.
 }
 }
 \examples{
@@ -54,11 +53,9 @@ category=sample(vec.category,nb.obs,replace = TRUE)
 dset=cbind.data.frame(category,right)
 dset$category=as.factor(dset$category)
 
-parallel::detectCores()
-
 res=mr.sig.cell(dset)
 
-plt.mr.sig.cell(res)
+plot(res)
 }
 \references{
 Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.

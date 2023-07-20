@@ -5,12 +5,11 @@
 #' @param data A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
 #' @param alpha The alpha risk of the test
-#' @param ncores Number of cores used to estimate the null distribution. Default is 2. See details
+#' @param ncores Number of cores used to estimate the null distribution. Default is 2.
 #'
 #' @details
 #' \itemize{
 #'   \item \strong{nperm}: The distribution of the statistic under the null hypothesis of no associations between products and descriptors is estimated using \emph{nperm} datasets generated thanks to random permutations of the response vectors along products within subjects.
-#'   \item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the \emph{nperm} datasets are generated.
 #' }
 #'
 #' @return A list with the following elements:
@@ -31,8 +30,6 @@
 #'
 #' @examples
 #'data(milkchoc)
-#'
-#'parallel::detectCores()
 #'
 #'sensory.mr.dimensionality.test(milkchoc)
 sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){

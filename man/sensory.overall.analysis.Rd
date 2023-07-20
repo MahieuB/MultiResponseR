@@ -19,9 +19,9 @@ sensory.overall.analysis(
 
 \item{alpha}{The alpha risk to consider at each step of the overall analysis}
 
-\item{cell.two.sided}{Logical. Should the multiple-response tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
+\item{cell.two.sided}{Logical. Should the multiple-response hypergeometric tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
 
-\item{ncores}{Number of cores used in the Monte-Carlo simulations. Default is 2. See details}
+\item{ncores}{Number of cores used in the Monte-Carlo simulations. Default is 2.}
 }
 \value{
 The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted
@@ -29,15 +29,8 @@ The first MR-CA factor map and the percent.derived.cont table with significant c
 \description{
 Successively performs \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}, \code{\link[MultiResponseR]{sensory.mrCA}} and \code{\link[MultiResponseR]{sensory.mr.sig.cell}}
 }
-\details{
-\itemize{
-\item \strong{ncores}: The more cores are added in the process, the faster the results will be obtained. The number of available cores is accessible using \code{\link[parallel]{detectCores}}. The parallel tasks are closed once the simulations are over.
-}
-}
 \examples{
 data(milkchoc)
-
-parallel::detectCores()
 
 sensory.overall.analysis(milkchoc)
 }

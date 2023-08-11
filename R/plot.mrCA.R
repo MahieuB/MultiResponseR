@@ -70,8 +70,8 @@ plot.mrCA=function(x,
     }
   }
   classe=class(select.rep)
-  if (classe!="character"){
-    stop("class(select.rep) must be character")
+  if (classe!="character" & !is.null(select.rep)){
+    stop("class(select.rep) must be character or NULL")
   }
 
   if (!is.null(x$bootstrap.replicate.coord)){
@@ -211,10 +211,10 @@ plot.mrCA=function(x,
       df.fleche=rbind(df.fleche,as.matrix(x$proj.col.coord[,axes,drop=FALSE]))
       col.fleche=c(col.fleche,rep("red4",nrow(x$proj.col.coord)))
     }
+    p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
   }
 
-  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
-
+  
   df.point=x$row.coord[,axes,drop=FALSE]
   col.point=rep("blue",nrow(x$row.coord))
   if(!is.null(x$proj.row.coord)){

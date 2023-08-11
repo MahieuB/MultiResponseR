@@ -61,8 +61,8 @@ plot.sensory.mrCA=function(x,
   }
 
   classe=class(select.desc)
-  if (classe!="character"){
-    stop("class(select.desc) must be character")
+  if (classe!="character" & !is.null(select.desc)){
+    stop("class(select.desc) must be character or NULL")
   }
 
   ell=data.frame(produit=as.factor(rep(levels(x$bootstrap.replicate.coord$produit),each=100)),matrix(0,100*nlevels(x$bootstrap.replicate.coord$produit),2))
@@ -149,10 +149,10 @@ plot.sensory.mrCA=function(x,
       df.fleche=rbind(df.fleche,as.matrix(x$proj.col.coord[,axes,drop=FALSE]))
       col.fleche=c(col.fleche,rep("red4",nrow(x$proj.col.coord)))
     }
+    p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
   }
 
-  p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
-
+  
   df.point=x$prod.coord[,axes,drop=FALSE]
   col.point=rep("blue",nrow(x$prod.coord))
   p=p+geom_point(data=as.data.frame(df.point),aes(x=df.point[,1],y=df.point[,2]),colour=col.point,size=size.points)

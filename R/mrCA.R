@@ -9,7 +9,6 @@
 #' @param ellipse Logical. Are confidence ellipses for the categories to be computed? Default is FALSE. See details
 #' @param nboot Number of virtual datasets used in the total bootsrap procedure. Useless when ellipse=FALSE. See details
 #' @param nbaxes.sig The number of significant axes retuned by \code{\link[MultiResponseR]{mr.dimensionality.test}}. By default, all axes are considered significant. Useless when ellipse=FALSE. See details
-#' @param ncores Number of cores used to generate the virtual datasets Default is 2. Useless when ellipse=FALSE.
 #'
 #' @details
 #' \itemize{
@@ -37,13 +36,8 @@
 #'
 #' @export
 #'
-#'
-#' @import parallel
-#' @import doParallel
-#' @import foreach
-#' @import iterators
 #' @import stats
-#'
+#' @import utils
 #'
 #' @examples
 #' nb.obs=200
@@ -58,7 +52,7 @@
 #' res=mrCA(dset)
 #'
 #' plot(res)
-mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,nboot=2000,nbaxes.sig=Inf,ncores=2){
+mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,nboot=2000,nbaxes.sig=Inf){
   classe=class(data)[1]
   if (!classe%in%c("data.frame")){
     stop("data must be a data.frame")
@@ -92,6 +86,8 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
   if (any(verif.col==0)){
     stop("Some columns are only zeros")
   }
+  data=data[order(data$cat),]
+  rownames(data)=as.character(1:nrow(data))
 
   cont=aggregate(.~cat,data,sum)
   rownames(cont)=cont$cat
@@ -185,7 +181,7 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
   cum.percent.eig=cumsum(percent.eig)
   mat.eig=cbind(eig,percent.eig,cum.percent.eig)
   colnames(mat.eig)=c("eigenvalue","percentage of inertia","cumulative percentage of inertia")
-  name.dim=paste("Dim.",1:nrow(mat.eig))
+  name.dim=paste("Dim.",1:nrow(mat.eig),sep="")
   rownames(mat.eig)=colnames(col.coord)=colnames(row.coord)=name.dim
   if(!is.null(proj.row)){
     colnames(proj.row.coord)=name.dim
@@ -212,23 +208,72 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
       proj.col.coord=proj.col.coord[,1:nbaxes.proc,drop=FALSE]
     }
 
-    registerDoParallel(cores = ncores)
-    nboot=nboot
-
-    sortie <- foreach(icount(nboot), .combine='rbind') %dopar% {
-
-      vec.ligne=NULL
-      for (boot.cat in levels(data$cat)){
-        les.ligne=which(data$cat==boot.cat)
-        if (length(les.ligne)==1){
-          loto=les.ligne
-        }else{
-          loto=sample(les.ligne,length(les.ligne),replace = TRUE)
-        }
-        vec.ligne=c(vec.ligne,loto)
+    row.c=matrix(NA,max(table(data$cat)),nlevels(data$cat))
+    colnames(row.c)=levels(data$cat)
+    for (c in unique(data$cat)){
+      ou.c=which(data$cat==c)
+      row.c[1:length(ou.c),c]=ou.c
+    }
+    mySample=function(vec){
+      vec.retour=na.omit(vec)
+      if (length(vec.retour)>1){
+        vec.retour=sample(vec.retour,length(vec.retour),replace = TRUE)
+      }else{
+        vec.retour=vec.retour[1]
       }
+      return(vec.retour)
+    }
+    myProcrustes=function(tofit,target,row.weights=rep(1,nrow(target)),scaling=FALSE){
+      if (!is.matrix(tofit) & !is.data.frame(tofit)){
+        stop("tofit must be a matrix or a data.frame")
+      }
+      if (!is.matrix(target) & !is.data.frame(target)){
+        stop("tofit must be a matrix or a data.frame")
+      }
+      X=as.matrix(tofit)
+      Y=as.matrix(target)
+      if (ncol(X)!=ncol(Y) | nrow(X)!=nrow(Y)){
+        stop("Dimension of tofit and target are different")
+      }
+      if (!is.logical(scaling)){
+        stop("scaling must be logical")
+      }
+      if (is.numeric(row.weights) | is.integer(row.weights)){
+        if (length(row.weights)!=nrow(target)){
+          stop("length(row.weights) must equal nrow(target)")
+        }
+      }else{
+        stop("class(row.weights) must be numeric or integer")
+      }
+      vecW=row.weights/sum(row.weights)
+      mX=t(as.matrix(vecW))%*%X
+      X=sweep(X,2,mX,"-")
+      mY=t(as.matrix(vecW))%*%Y
+      loc=mY
+      Y=sweep(Y,2,mY,"-")
+      matW=diag(row.weights/sum(row.weights)*nrow(target))
+      croise=t(X)%*%matW%*%Y
+      udv=svd(croise)
+      if (scaling){
+        dilat=sum(udv$d)/sum(diag(crossprod(X)))
+      }else{
+        dilat=1
+      }
+      H=udv$u%*%t(udv$v)
+      aligned=(dilat*X%*%H)
+      aligned=sweep(aligned,2,loc,"+")
+      return(aligned)
+    }
 
-      jdd.tirage=data[vec.ligne,]
+    sortie=data.frame(cat=as.factor(rep(levels(data$cat),nboot)),matrix(0,nlevels(data$cat)*nboot,nbaxes.proc))
+    colnames(sortie)[2:ncol(sortie)]=colnames(row.coord)
+    vec.boot=seq(1,nrow(sortie),by=nlevels(data$cat))
+    pb=txtProgressBar(min=0,max = nboot,style=3)
+    for (boot in 1:nboot){
+
+      tirage=unlist(apply(row.c,2,mySample))
+      jdd.tirage=data[tirage,]
+      jdd.tirage=jdd.tirage[order(jdd.tirage$cat),]
       rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
       nplus.tirage=table(jdd.tirage$cat)
@@ -254,40 +299,6 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
         jdd.tirage=jdd.tirage[,-vire.extend]
       }
 
-
-      ######
-
-      myProcrustes=function(tofit,target,scaling=FALSE){
-        if (!is.matrix(tofit) & !is.data.frame(tofit)){
-          stop("tofit must be a matrix or a data.frame")
-        }
-        X=as.matrix(tofit)
-        X=sweep(X,2,colMeans(X),"-")
-        if (!is.matrix(target) & !is.data.frame(target)){
-          stop("tofit must be a matrix or a data.frame")
-        }
-        Y=as.matrix(target)
-        if (!is.logical(scaling)){
-          stop("scaling must be logical")
-        }
-        if (ncol(X)!=ncol(Y) | nrow(X)!=nrow(Y)){
-          stop("Dimension of tofit and target are different")
-        }
-        loc=colMeans(Y)
-        Y=sweep(Y,2,colMeans(Y),"-")
-        croise=crossprod(X,Y)
-        udv=svd(croise)
-        if (scaling){
-          dilat=sum(udv$d)/sum(diag(crossprod(X)))
-        }else{
-          dilat=1
-        }
-        H=udv$u%*%t(udv$v)
-        aligned=(dilat*X%*%H)
-        aligned=sweep(aligned,2,loc,"+")
-        return(aligned)
-      }
-
       nplusplus.tirage=sum(nplus.tirage)
       fij.tirage=(nplus.tirage%o%colSums(redui.tirage))/nplusplus.tirage
       std.tirage=((redui.tirage-fij.tirage)/sqrt(fij.tirage))/sqrt(nplusplus.tirage)
@@ -305,12 +316,10 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
       marge.r.tirage=nplus.tirage/nplusplus.tirage
       row.coord.tirage=(u.tirage/sqrt(marge.r.tirage))%*%diag(vs.tirage)
       row.coord.tirage=row.coord.tirage[,1:nbaxes.proc]
-      ######
 
-      rot = myProcrustes(row.coord.tirage, row.coord)
-      rot=cbind.data.frame(rownames(rot),rot)
-      colnames(rot)[1]="cat"
-      return(rot)
+      rot = myProcrustes(row.coord.tirage, row.coord,nplus)
+      sortie[vec.boot[boot]:(vec.boot[boot]+nlevels(data$cat)-1),2:ncol(sortie)]=rot
+      setTxtProgressBar(pb,boot)
     }
 
     sortie$cat=as.factor(sortie$cat)
@@ -349,7 +358,6 @@ mrCA=function(data,proj.row=NULL,proj.row.obs=NULL,proj.col=NULL,ellipse=FALSE,n
     toellipse=NULL
     diff.test=NULL
   }
-  stopImplicitCluster()
   back=list(eigen=mat.eig,row.coord=row.coord,col.coord=col.coord,proj.row.coord=proj.row.coord,proj.col.coord=proj.col.coord,svd=list(u=u,vs=vs,v=v),bootstrap.replicate.coord=toellipse,total.bootstrap.test.pvalues=diff.test)
   class(back)=c("mrCA","list")
   return(back)

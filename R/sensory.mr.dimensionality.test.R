@@ -5,7 +5,6 @@
 #' @param data A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
 #' @param alpha The alpha risk of the test
-#' @param ncores Number of cores used to estimate the null distribution. Default is 2.
 #'
 #' @details
 #' \itemize{
@@ -20,19 +19,17 @@
 #' }
 #' @references Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
 #' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
+#'
 #' @export
 #'
-#' @import parallel
-#' @import doParallel
-#' @import foreach
-#' @import iterators
 #' @import stats
+#' @import utils
 #'
 #' @examples
 #'data(milkchoc)
 #'
 #'sensory.mr.dimensionality.test(milkchoc)
-sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
+sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05){
   classe=class(data)[1]
   if (!classe%in%c("data.frame")){
     stop("data must be a data.frame")
@@ -98,24 +95,30 @@ sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
   vs=udv$d[1:nb.axe]
   eig=vs^2
   chi.obs=eig
-  for (j in 1:length(chi.obs)){
-    chi.obs[j]=sum(eig[j:length(eig)])*N
+  chi.obs=c(sum(chi.obs),(sum(chi.obs)-cumsum(chi.obs))[-length(eig)])*N
+
+  row.s=matrix(NA,nlevels(data$produit),nlevels(data$sujet))
+  colnames(row.s)=levels(data$sujet)
+  for (s in unique(data$sujet)){
+    ou.s=which(data$sujet==s)
+    row.s[1:length(ou.s),s]=ou.s
+  }
+  mySample=function(vec){
+    vec.retour=na.omit(vec)
+    if (length(vec.retour)>1){
+      vec.retour=sample(vec.retour,length(vec.retour),replace = FALSE)
+    }else{
+      vec.retour=vec.retour[1]
+    }
+    return(vec.retour)
   }
 
-  registerDoParallel(cores = ncores)
-  nperm=nperm
-  sortie <- foreach(icount(nperm), .combine='rbind') %dopar% {
+  sortie=matrix(0,nperm,length(chi.obs))
+  pb=txtProgressBar(1,nperm,style=3)
+  for (perm in 1:nperm){
     virt.data=data
-
-    for(s.perm in levels(virt.data$sujet)){
-      l.s=which(virt.data$sujet==s.perm)
-      if (length(l.s)==1){
-        loto=l.s
-      }else{
-        loto=sample(l.s,length(l.s),replace = FALSE)
-      }
-      virt.data$produit[l.s]=virt.data$produit[loto]
-    }
+    tirage=unlist(apply(row.s,2,mySample))
+    virt.data[,3:ncol(virt.data)]=data[tirage,3:ncol(data)]
 
     org=aggregate(.~produit,virt.data,sum)
     org$sujet=NULL
@@ -136,10 +139,9 @@ sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
     eig=vs^2
 
     chi.virt=eig
-    for (j in 1:length(chi.virt)){
-      chi.virt[j]=sum(eig[j:length(eig)])*N
-    }
-    return(chi.virt)
+    chi.virt=c(sum(chi.virt),(sum(chi.virt)-cumsum(chi.virt))[-length(eig)])*N
+    sortie[perm,]=chi.virt
+    setTxtProgressBar(pb,perm)
   }
   sortie=rbind(sortie,chi.obs)
   calc.pval=function(vec){
@@ -162,6 +164,5 @@ sensory.mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
   }
   axe.test=list(dim.sig=dim.sig,statistics=chi.obs,p.values=back.pval)
   back=axe.test
-  stopImplicitCluster()
   return(back)
 }

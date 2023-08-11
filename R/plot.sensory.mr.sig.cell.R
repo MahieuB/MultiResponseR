@@ -19,6 +19,8 @@
 #'
 #' @import flextable
 #' @import officer
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #'data(milkchoc)

@@ -11,8 +11,7 @@ mrCA(
   proj.col = NULL,
   ellipse = FALSE,
   nboot = 2000,
-  nbaxes.sig = Inf,
-  ncores = 2
+  nbaxes.sig = Inf
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ mrCA(
 \item{nboot}{Number of virtual datasets used in the total bootsrap procedure. Useless when ellipse=FALSE. See details}
 
 \item{nbaxes.sig}{The number of significant axes retuned by \code{\link[MultiResponseR]{mr.dimensionality.test}}. By default, all axes are considered significant. Useless when ellipse=FALSE. See details}
-
-\item{ncores}{Number of cores used to generate the virtual datasets Default is 2. Useless when ellipse=FALSE.}
 }
 \value{
 A list with the following elements:

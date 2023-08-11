@@ -6,20 +6,11 @@
 #' @param nMC Number of Monte-Carlo simulations to consider at each step of the overall analysis
 #' @param alpha The alpha risk to consider at each step of the overall analysis
 #' @param cell.two.sided Logical. Should the multiple-response hypergeometric tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
-#' @param ncores Number of cores used in the Monte-Carlo simulations. Default is 2.
 #'
 #'
 #' @return The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted
 #' @export
 #'
-#' @import foreach
-#' @import parallel
-#' @import doParallel
-#' @import flextable
-#' @import officer
-#' @import abind
-#' @import FactoMineR
-#' @import stats
 #'
 #' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 #'
@@ -28,14 +19,13 @@
 #'data(milkchoc)
 #'
 #'sensory.overall.analysis(milkchoc)
-sensory.overall.analysis=function(data,nMC=2000,alpha=0.05,cell.two.sided=FALSE,ncores=2){
-  res.dim=sensory.mr.dimensionality.test(data,nperm=nMC,alpha=alpha,ncores=ncores)
+sensory.overall.analysis=function(data,nMC=2000,alpha=0.05,cell.two.sided=FALSE){
+  res.dim=sensory.mr.dimensionality.test(data,nperm=nMC,alpha=alpha)
   dim.sig=res.dim$dim.sig
-  res.ca=sensory.mrCA(data,nboot=nMC,nbaxes.sig=dim.sig,ncores=ncores)
+  res.ca=sensory.mrCA(data,nboot=nMC,nbaxes.sig=dim.sig)
   p=plot(res.ca,alpha.total.bootstrap.test=alpha,alpha.ellipse=alpha)
   print(p)
-  res.cell=sensory.mr.sig.cell(data,nsample=nMC,nbaxes.sig=dim.sig,two.sided=cell.two.sided,ncores=ncores)
+  res.cell=sensory.mr.sig.cell(data,nsample=nMC,nbaxes.sig=dim.sig,two.sided=cell.two.sided)
   g=plot(res.cell,alpha.1=alpha,alpha.2=0)
   print(g)
-  stopImplicitCluster()
 }

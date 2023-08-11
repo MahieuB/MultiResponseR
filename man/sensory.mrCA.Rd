@@ -4,7 +4,7 @@
 \alias{sensory.mrCA}
 \title{Multiple-response Correspondence Analysis (MR-CA) for sensory data}
 \usage{
-sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf, ncores = 2)
+sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf)
 }
 \arguments{
 \item{data}{A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor}
@@ -12,8 +12,6 @@ sensory.mrCA(data, nboot = 2000, nbaxes.sig = Inf, ncores = 2)
 \item{nboot}{The number of bootstrapped panel of the total bootstrap procedure}
 
 \item{nbaxes.sig}{The number of significant axes retuned by \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}. By default, all axes are considered significant. See details}
-
-\item{ncores}{Number of cores used to generate the virtual panels. Default is 2.}
 }
 \value{
 A list with the following elements:

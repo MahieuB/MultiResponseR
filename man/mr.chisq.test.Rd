@@ -4,14 +4,12 @@
 \alias{mr.chisq.test}
 \title{Multiple-response chi-square test}
 \usage{
-mr.chisq.test(data, nperm = 2000, ncores = 2)
+mr.chisq.test(data, nperm = 2000)
 }
 \arguments{
 \item{data}{A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option}
 
 \item{nperm}{Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details}
-
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:

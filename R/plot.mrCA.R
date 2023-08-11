@@ -25,12 +25,11 @@
 #'
 #' @export
 #'
-#' @import FactoMineR
-#' @import graphics
-#' @import stats
 #' @import ggplot2
 #' @import ggrepel
-#'
+#' @importFrom ellipse ellipse
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #' nb.obs=200
@@ -76,7 +75,22 @@ plot.mrCA=function(x,
   }
 
   if (!is.null(x$bootstrap.replicate.coord)){
-    ell=coord.ellipse(x$bootstrap.replicate.coord,axes=axes,level.conf = (1-alpha.ellipse))$res
+    ell=data.frame(cat=as.factor(rep(levels(x$bootstrap.replicate.coord$cat),each=100)),matrix(0,100*nlevels(x$bootstrap.replicate.coord$cat),2))
+    colnames(ell)[2:3]=paste("Dim.",1:2,sep = "")
+    for (c in levels(ell$cat)){
+      boot.rep.c=x$bootstrap.replicate.coord[x$bootstrap.replicate.coord$cat==c,-1]
+      boot.rep.c=as.matrix(boot.rep.c)
+      sigma=cov(boot.rep.c)
+      mu=colMeans(boot.rep.c)
+      calc.mal.sq=function(vec){
+        mal.bary=t(as.matrix(vec-mu))%*%solve(sigma,tol=1e-300)%*%(as.matrix(vec-mu))
+        return(as.numeric(mal.bary))
+      }
+      mal.sq.cloud=apply(boot.rep.c,1,calc.mal.sq)
+      dilat.stat=sqrt(quantile(mal.sq.cloud,1-alpha.ellipse,type=2))
+      ell.c=ellipse::ellipse(sigma[c(axes[1],axes[2]),c(axes[1],axes[2])],centre=mu[c(axes[1],axes[2])],t=dilat.stat)
+      ell[which(ell$cat==c),2:3]=ell.c
+    }
   }
 
   adjusted.col.coord=x$col.coord

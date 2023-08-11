@@ -20,6 +20,8 @@
 #'
 #' @import flextable
 #' @import officer
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #' nb.obs=200

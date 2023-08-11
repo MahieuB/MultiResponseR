@@ -26,12 +26,11 @@
 #'
 #' @export
 #'
-#' @import FactoMineR
-#' @import graphics
-#' @import stats
 #' @import ggplot2
 #' @import ggrepel
-#'
+#' @importFrom ellipse ellipse
+#' @import stats
+#' @import utils
 #'
 #' @examples
 #'data(milkchoc)
@@ -66,7 +65,22 @@ plot.sensory.mrCA=function(x,
     stop("class(select.desc) must be character")
   }
 
-  ell=coord.ellipse(x$bootstrap.replicate.coord,axes=axes,level.conf = (1-alpha.ellipse))$res
+  ell=data.frame(produit=as.factor(rep(levels(x$bootstrap.replicate.coord$produit),each=100)),matrix(0,100*nlevels(x$bootstrap.replicate.coord$produit),2))
+  colnames(ell)[2:3]=paste("Dim.",1:2,sep = "")
+  for (p in levels(ell$produit)){
+    boot.rep.p=x$bootstrap.replicate.coord[x$bootstrap.replicate.coord$produit==p,-1]
+    boot.rep.p=as.matrix(boot.rep.p)
+    sigma=cov(boot.rep.p)
+    mu=colMeans(boot.rep.p)
+    calc.mal.sq=function(vec){
+      mal.bary=t(as.matrix(vec-mu))%*%solve(sigma,tol=1e-300)%*%(as.matrix(vec-mu))
+      return(as.numeric(mal.bary))
+    }
+    mal.sq.cloud=apply(boot.rep.p,1,calc.mal.sq)
+    dilat.stat=sqrt(quantile(mal.sq.cloud,1-alpha.ellipse,type=2))
+    ell.p=ellipse::ellipse(sigma[c(axes[1],axes[2]),c(axes[1],axes[2])],centre=mu[c(axes[1],axes[2])],t=dilat.stat)
+    ell[which(ell$produit==p),2:3]=ell.p
+  }
 
   adjusted.col.coord=x$desc.coord
 

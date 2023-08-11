@@ -4,7 +4,7 @@
 \alias{mr.dimensionality.test}
 \title{Multiple-response dimensionality test}
 \usage{
-mr.dimensionality.test(data, nperm = 2000, alpha = 0.05, ncores = 2)
+mr.dimensionality.test(data, nperm = 2000, alpha = 0.05)
 }
 \arguments{
 \item{data}{A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option}
@@ -12,8 +12,6 @@ mr.dimensionality.test(data, nperm = 2000, alpha = 0.05, ncores = 2)
 \item{nperm}{Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details}
 
 \item{alpha}{The alpha risk of the test}
-
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:

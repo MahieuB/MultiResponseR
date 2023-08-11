@@ -8,8 +8,7 @@ sensory.overall.analysis(
   data,
   nMC = 2000,
   alpha = 0.05,
-  cell.two.sided = FALSE,
-  ncores = 2
+  cell.two.sided = FALSE
 )
 }
 \arguments{
@@ -20,8 +19,6 @@ sensory.overall.analysis(
 \item{alpha}{The alpha risk to consider at each step of the overall analysis}
 
 \item{cell.two.sided}{Logical. Should the multiple-response hypergeometric tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
-
-\item{ncores}{Number of cores used in the Monte-Carlo simulations. Default is 2.}
 }
 \value{
 The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted

@@ -4,13 +4,7 @@
 \alias{sensory.mr.sig.cell}
 \title{Multiple-response tests per cell for sensory data}
 \usage{
-sensory.mr.sig.cell(
-  data,
-  nsample = 2000,
-  nbaxes.sig = Inf,
-  two.sided = FALSE,
-  ncores = 2
-)
+sensory.mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = FALSE)
 }
 \arguments{
 \item{data}{A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor}
@@ -20,8 +14,6 @@ sensory.mr.sig.cell(
 \item{nbaxes.sig}{The number of significant axes retuned by \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}. By default, all axes are considered significant. See details}
 
 \item{two.sided}{Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
-
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:

@@ -4,7 +4,7 @@
 \alias{sensory.mr.dimensionality.test}
 \title{Multiple-response dimensionality test for sensory data}
 \usage{
-sensory.mr.dimensionality.test(data, nperm = 2000, alpha = 0.05, ncores = 2)
+sensory.mr.dimensionality.test(data, nperm = 2000, alpha = 0.05)
 }
 \arguments{
 \item{data}{A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor}
@@ -12,8 +12,6 @@ sensory.mr.dimensionality.test(data, nperm = 2000, alpha = 0.05, ncores = 2)
 \item{nperm}{Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details}
 
 \item{alpha}{The alpha risk of the test}
-
-\item{ncores}{Number of cores used to estimate the null distribution. Default is 2.}
 }
 \value{
 A list with the following elements:

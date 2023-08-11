@@ -5,7 +5,6 @@
 #' @param data A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option
 #' @param nperm Number of permuted datasets to estimate the distribution of the statistic under the null hypothesis. See details
 #' @param alpha The alpha risk of the test
-#' @param ncores Number of cores used to estimate the null distribution. Default is 2.
 #'
 #' @return A list with the following elements:
 #' \describe{
@@ -21,11 +20,8 @@
 #' @references Loughin, T. M., & Scherer, P. N. (1998). Testing for Association in Contingency Tables with Multiple Column Responses. Biometrics, 54(2), 630-637.
 #' @references Mahieu, B., Schlich, P., Visalli, M., & Cardot, H. (2021). A multiple-response chi-square framework for the analysis of Free-Comment and Check-All-That-Apply data. Food Quality and Preference, 93.
 #'
-#' @import parallel
-#' @import doParallel
-#' @import foreach
-#' @import iterators
 #' @import stats
+#' @import utils
 #'
 #' @examples
 #' nb.obs=200
@@ -40,7 +36,7 @@
 #'
 #' mr.dimensionality.test(dset)
 #'
-mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
+mr.dimensionality.test=function(data,nperm=2000,alpha=0.05){
   classe=class(data)[1]
   if (!classe%in%c("data.frame")){
     stop("data must be a data.frame")
@@ -66,6 +62,8 @@ mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
     }
   }
   colnames(data)[1]="category"
+  data=data[order(data$category),]
+  rownames(data)=as.character(1:nrow(data))
   original=aggregate(.~category,data,sum)
   rownames(original)=original$category
   original$category=NULL
@@ -89,13 +87,11 @@ mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
   vs=udv$d[1:nb.axe]
   eig=vs^2
   chi.obs=eig
-  for (j in 1:length(chi.obs)){
-    chi.obs[j]=sum(eig[j:length(eig)])*N
-  }
+  chi.obs=c(sum(chi.obs),(sum(chi.obs)-cumsum(chi.obs))[-length(eig)])*N
 
-  registerDoParallel(cores = ncores)
-  nperm=nperm
-  sortie <- foreach(icount(nperm), .combine='rbind') %dopar% {
+  sortie=matrix(0,nperm,length(chi.obs))
+  pb=txtProgressBar(min=0,max=nperm,style=3)
+  for (perm in 1:nperm){
     virt.data=data
     loto=sample(1:nrow(virt.data),nrow(virt.data),replace = F)
     virt.data[,2:ncol(virt.data)]=virt.data[loto,2:ncol(virt.data)]
@@ -117,10 +113,9 @@ mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
     eig=vs^2
 
     chi.virt=eig
-    for (j in 1:length(chi.virt)){
-      chi.virt[j]=sum(eig[j:length(eig)])*N
-    }
-    return(chi.virt)
+    chi.virt=c(sum(chi.virt),(sum(chi.virt)-cumsum(chi.virt))[-length(eig)])*N
+    sortie[perm,]=chi.virt
+    setTxtProgressBar(pb,perm)
   }
   sortie=rbind(sortie,chi.obs)
   calc.pval=function(vec){
@@ -143,6 +138,5 @@ mr.dimensionality.test=function(data,nperm=2000,alpha=0.05,ncores=2){
   }
   axe.test=list(dim.sig=dim.sig,statistics=chi.obs,p.values=back.pval)
   back=axe.test
-  stopImplicitCluster()
   return(back)
 }

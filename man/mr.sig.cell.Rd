@@ -21,7 +21,7 @@ A list with the following elements:
 \item{original.cont}{Observed number of times each category chosen each response option}
 \item{percent.cont}{Within each category, percentage of observations where the response options were chosen}
 \item{null.cont}{Expected number of times each category chosen each response option under the null hypothesis}
-\item{p.values}{P-values of the tests per cell}
+\item{p.values}{P-values of the tests per cell fdr adjusted by response option}
 \item{derived.cont}{The derived contingency table corresponding to \emph{nbaxes.sig} axes}
 \item{percent.derived.cont}{Within each category, percentage of observations where the response options were chosen in the derived contingency table corresponding to \emph{nbaxes.sig} axes}
 }

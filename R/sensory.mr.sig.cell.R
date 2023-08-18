@@ -18,7 +18,7 @@
 #'   \item{original.cont}{Observed number of times each product was described by each descriptor}
 #'   \item{percent.cont}{For each product, percentage of evaluations where each descriptor was cited for this product}
 #'   \item{null.cont}{Expected number of times each product was described by each descriptor under the null hypothesis}
-#'   \item{p.values}{P-values of the tests per cell}
+#'   \item{p.values}{P-values of the tests per cell fdr adjusted by descriptor}
 #'   \item{derived.cont}{The derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #'   \item{percent.derived.cont}{For each product, percentage of evaluations where each descriptor was cited for this product in the derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #' }
@@ -215,8 +215,9 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE){
   org=as.data.frame(t(org[,sorted.name]))
   percent.cont=as.data.frame(t(as.data.frame(round(t(org)/nplus*100,2))))
   back.pval=as.data.frame(t(back.pval[,sorted.name]))
+  adj.back.pval=as.data.frame(t(apply(back.pval,1,p.adjust,method="fdr")))
 
-  back=list(original.cont=org,percent.cont=percent.cont,null.cont=as.data.frame(t(med.mat[,sorted.name])),p.value=round(back.pval,4),derived.cont=as.data.frame(t(theo.cont[,sorted.name])),
+  back=list(original.cont=org,percent.cont=percent.cont,null.cont=as.data.frame(t(med.mat[,sorted.name])),p.value=round(adj.back.pval,4),derived.cont=as.data.frame(t(theo.cont[,sorted.name])),
             percent.derived.cont=as.data.frame(round(t(theo.cont[,sorted.name]/nplus*100),2)))
   class(back)=c("sensory.mr.sig.cell","list")
   return(back)

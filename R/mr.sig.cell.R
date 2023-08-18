@@ -18,7 +18,7 @@
 #'   \item{original.cont}{Observed number of times each category chosen each response option}
 #'   \item{percent.cont}{Within each category, percentage of observations where the response options were chosen}
 #'   \item{null.cont}{Expected number of times each category chosen each response option under the null hypothesis}
-#'   \item{p.values}{P-values of the tests per cell}
+#'   \item{p.values}{P-values of the tests per cell fdr adjusted by response option}
 #'   \item{derived.cont}{The derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #'   \item{percent.derived.cont}{Within each category, percentage of observations where the response options were chosen in the derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #' }
@@ -177,8 +177,9 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE){
   original=as.data.frame(t(original[,sorted.name]))
   percent.cont=as.data.frame(t(as.data.frame(round(as.matrix((org)/nplus*100),2))[,sorted.name]))
   back.pval=as.data.frame(t(back.pval[,sorted.name]))
+  adj.back.pval=as.data.frame(t(apply(back.pval,1,p.adjust,method="fdr")))
 
-  back=list(original.cont=original,percent.cont=percent.cont,null.cont=as.data.frame(t(med.mat[,sorted.name])),p.value=round(back.pval,4),derived.cont=as.data.frame(t(theo.cont[,sorted.name])),
+  back=list(original.cont=original,percent.cont=percent.cont,null.cont=as.data.frame(t(med.mat[,sorted.name])),p.value=round(adj.back.pval,4),derived.cont=as.data.frame(t(theo.cont[,sorted.name])),
             percent.derived.cont=as.data.frame(round(t(theo.cont[,sorted.name]/nplus*100),2)))
 
 

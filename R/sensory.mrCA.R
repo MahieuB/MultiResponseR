@@ -182,24 +182,11 @@ sensory.mrCA=function(data,nboot=2000,nbaxes.sig=Inf){
     jdd.tirage=jdd.tirage[order(jdd.tirage$sujet,jdd.tirage$produit),]
     rownames(jdd.tirage)=as.character(1:nrow(jdd.tirage))
 
-    param.etendu.tirage=table(jdd.tirage$sujet,jdd.tirage$produit)
-    nplus.tirage=colSums(param.etendu.tirage)
-
-    cont.tirage = aggregate(.~produit,jdd.tirage,sum)
-    rownames(cont.tirage)=as.character(cont.tirage$produit)
-    cont.tirage$produit=cont.tirage$sujet=NULL
-
-    verif=colSums(cont.tirage)
+    verif=colSums(jdd.tirage[,-c(1:2)])
     vire = which(verif==0)
     if(length(vire)!=0){
-      cont.tirage=cont.tirage[,-vire]
-      redui.tirage=redui.tirage[,-vire]
-      vire.extend=NULL
-      for (quel.vire in names(vire)){
-        ou.virer=which(colnames(jdd.tirage)==quel.vire)
-        vire.extend=c(vire.extend,ou.virer)
-      }
-      jdd.tirage=jdd.tirage[,-vire.extend]
+      vire=vire+2
+      jdd.tirage=jdd.tirage[,-vire]
     }
 
     ca.tirage=mrCA(jdd.tirage[,-1])

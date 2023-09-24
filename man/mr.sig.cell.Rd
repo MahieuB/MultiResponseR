@@ -4,7 +4,7 @@
 \alias{mr.sig.cell}
 \title{Multiple-response tests per cell}
 \usage{
-mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = FALSE)
+mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = TRUE)
 }
 \arguments{
 \item{data}{A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option}
@@ -13,7 +13,7 @@ mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = FALSE)
 
 \item{nbaxes.sig}{The number of significant axes retuned by \code{\link[MultiResponseR]{mr.dimensionality.test}}. By default, all axes are considered significant. See details}
 
-\item{two.sided}{Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
+\item{two.sided}{Logical. Should the tests be two-sided or not?}
 }
 \value{
 A list with the following elements:

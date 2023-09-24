@@ -4,7 +4,7 @@
 \alias{sensory.mr.sig.cell}
 \title{Multiple-response tests per cell for sensory data}
 \usage{
-sensory.mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = FALSE)
+sensory.mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = TRUE)
 }
 \arguments{
 \item{data}{A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor}
@@ -13,7 +13,7 @@ sensory.mr.sig.cell(data, nsample = 2000, nbaxes.sig = Inf, two.sided = FALSE)
 
 \item{nbaxes.sig}{The number of significant axes retuned by \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}. By default, all axes are considered significant. See details}
 
-\item{two.sided}{Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
+\item{two.sided}{Logical. Should the tests be two-sided or not?}
 }
 \value{
 A list with the following elements:
@@ -21,7 +21,7 @@ A list with the following elements:
 \item{original.cont}{Observed number of times each product was described by each descriptor}
 \item{percent.cont}{For each product, percentage of evaluations where each descriptor was cited for this product}
 \item{null.cont}{Expected number of times each product was described by each descriptor under the null hypothesis}
-\item{p.values}{P-values of the tests per cell fdr adjusted by descriptor}
+\item{p.values}{P-values of the tests per cell}
 \item{derived.cont}{The derived contingency table corresponding to \emph{nbaxes.sig} axes}
 \item{percent.derived.cont}{For each product, percentage of evaluations where each descriptor was cited for this product in the derived contingency table corresponding to \emph{nbaxes.sig} axes}
 }

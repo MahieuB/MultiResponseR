@@ -4,12 +4,7 @@
 \alias{sensory.overall.analysis}
 \title{Overall analysis of multiple-response sensory data using the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2021)}
 \usage{
-sensory.overall.analysis(
-  data,
-  nMC = 2000,
-  alpha = 0.05,
-  cell.two.sided = FALSE
-)
+sensory.overall.analysis(data, nMC = 2000, alpha = 0.05, cell.two.sided = TRUE)
 }
 \arguments{
 \item{data}{A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor}
@@ -18,7 +13,7 @@ sensory.overall.analysis(
 
 \item{alpha}{The alpha risk to consider at each step of the overall analysis}
 
-\item{cell.two.sided}{Logical. Should the multiple-response hypergeometric tests per cell be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis}
+\item{cell.two.sided}{Logical. Should the multiple-response hypergeometric tests per cell be two-sided or not?}
 }
 \value{
 The first MR-CA factor map and the percent.derived.cont table with significant cells highlighted

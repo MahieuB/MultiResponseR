@@ -5,7 +5,7 @@
 #' @param data A data.frame of evaluations in rows whose first two columns are factors (subject and product) and subsequent columns are binary numeric or integer, each column being a descriptor
 #' @param nsample Number of randomly sampled datasets to estimate the distribution of the value under the null hypothesis. See details
 #' @param nbaxes.sig The number of significant axes retuned by \code{\link[MultiResponseR]{sensory.mr.dimensionality.test}}. By default, all axes are considered significant. See details
-#' @param two.sided Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
+#' @param two.sided Logical. Should the tests be two-sided or not?
 #'
 #' @details
 #' \itemize{
@@ -18,7 +18,7 @@
 #'   \item{original.cont}{Observed number of times each product was described by each descriptor}
 #'   \item{percent.cont}{For each product, percentage of evaluations where each descriptor was cited for this product}
 #'   \item{null.cont}{Expected number of times each product was described by each descriptor under the null hypothesis}
-#'   \item{p.values}{P-values of the tests per cell fdr adjusted by descriptor}
+#'   \item{p.values}{P-values of the tests per cell}
 #'   \item{derived.cont}{The derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #'   \item{percent.derived.cont}{For each product, percentage of evaluations where each descriptor was cited for this product in the derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #' }
@@ -39,7 +39,7 @@
 #'res=sensory.mr.sig.cell(milkchoc,nbaxes.sig=dim.sig)
 #'
 #'plot(res)
-sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE){
+sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=TRUE){
   classe=class(data)[1]
   if (!classe%in%c("data.frame")){
     stop("data must be a data.frame")
@@ -120,10 +120,10 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE){
       d.vs=d.vs[1:nbaxes.sig,1:nbaxes.sig]
     }
     theo=res$svd$u[,1:nbaxes.sig,drop=FALSE]%*%d.vs%*%t(res$svd$v[,1:nbaxes.sig,drop=FALSE])
-    mr=nplus/nplusplus
-    mc=colSums(org)/nplusplus
+    mr=as.numeric(table(tab[,1])/sum(table(tab[,1])))
+    mc=as.numeric(colSums(tab[,-1])/sum(table(tab[,1])))
     e=mr%o%mc
-    theo.cont=((theo*sqrt(e))+e)*nplusplus
+    theo.cont=((theo*sqrt(e))+e)*sum(table(tab[,1]))
     theo.cont=round(ifelse(theo.cont<0,0,theo.cont))
     return(theo.cont)
   }
@@ -152,34 +152,22 @@ sensory.mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE){
     tirage=unlist(apply(row.s,2,mySample))
     virt.data[,3:ncol(virt.data)]=data[tirage,3:ncol(data)]
 
-    org.virt=aggregate(.~produit,virt.data,sum)
-    org.virt$sujet=NULL
-    rownames(org.virt)=as.character(org.virt$produit)
-    org.virt$produit=NULL
-
-    param.etendu=table(virt.data$sujet,virt.data$produit)
-
-    nplus=colSums(param.etendu)
-    nom=names(nplus)
-    nplus=as.numeric(nplus)
-    names(nplus)=nom
-
-    nplusplus=sum(nplus)
-
-    verif=colSums(org.virt)
+    verif=colSums(virt.data[,-c(1:2)])
     vire = which(verif==0)
     if(length(vire)!=0){
-      nom.zero=names(vire)
-      org.virt=org.virt[,-vire]
-      vire.extend=NULL
-      for (quel.vire in names(vire)){
-        ou.virer=which(colnames(virt.data)==quel.vire)
-        vire.extend=c(vire.extend,ou.virer)
-      }
-      virt.data=virt.data[,-vire.extend]
+      nom.vire=names(vire)
+      vire=vire+2
+      virt.data=virt.data[,-vire]
     }
 
     theo.cont.virt=calc.cont(virt.data[,-1])
+    if(length(vire)!=0){
+      theo.zero=matrix(0,nrow = nrow(theo.cont.virt),ncol = length(nom.vire))
+      rownames(theo.zero)=rownames(theo.cont.virt)
+      colnames(theo.zero)=nom.vire
+      theo.cont.virt=cbind(theo.cont.virt,theo.zero)
+      theo.cont.virt=theo.cont.virt[,sorted.name]
+    }
     sortie[,,ssample]=theo.cont.virt
     setTxtProgressBar(pb,ssample)
   }

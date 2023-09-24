@@ -5,7 +5,7 @@
 #' @param data A data.frame of observations in rows whose first column is a factor (the categories) and subsequent columns are binary numeric or integer, each column being a response option
 #' @param nsample Number of randomly sampled datasets to estimate the distribution of the value under the null hypothesis. See details
 #' @param nbaxes.sig The number of significant axes retuned by \code{\link[MultiResponseR]{mr.dimensionality.test}}. By default, all axes are considered significant. See details
-#' @param two.sided Logical. Should the tests be two-sided or not? By default, the tests are performed with a one-sided greater alternative hypothesis
+#' @param two.sided Logical. Should the tests be two-sided or not?
 #'
 #' @details
 #' \itemize{
@@ -45,7 +45,7 @@
 #' res=mr.sig.cell(dset)
 #'
 #' plot(res)
-mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=FALSE){
+mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=TRUE){
   classe=class(data)[1]
   if (!classe%in%c("data.frame")){
     stop("cont must be a data.frame")

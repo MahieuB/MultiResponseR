@@ -18,7 +18,7 @@
 #'   \item{original.cont}{Observed number of times each product was described by each descriptor}
 #'   \item{percent.cont}{For each product, percentage of evaluations where each descriptor was cited for this product}
 #'   \item{null.cont}{Expected number of times each product was described by each descriptor under the null hypothesis}
-#'   \item{p.values}{P-values of the tests per cell}
+#'   \item{p.values}{P-values of the tests per cell fdr adjusted by descriptor}
 #'   \item{derived.cont}{The derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #'   \item{percent.derived.cont}{For each product, percentage of evaluations where each descriptor was cited for this product in the derived contingency table corresponding to \emph{nbaxes.sig} axes}
 #' }

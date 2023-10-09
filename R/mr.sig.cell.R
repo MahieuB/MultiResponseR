@@ -108,10 +108,10 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=TRUE){
       d.vs=d.vs[1:nbaxes.sig,1:nbaxes.sig]
     }
     theo=res$svd$u[,1:nbaxes.sig,drop=FALSE]%*%d.vs%*%t(res$svd$v[,1:nbaxes.sig,drop=FALSE])
-    mr=nplus/nplusplus
-    mc=colSums(org)/nplusplus
+    mr=as.numeric(table(tab[,1])/sum(table(tab[,1])))
+    mc=as.numeric(colSums(tab[,-1])/sum(table(tab[,1])))
     e=mr%o%mc
-    theo.cont=((theo*sqrt(e))+e)*nplusplus
+    theo.cont=((theo*sqrt(e))+e)*sum(table(tab[,1]))
     theo.cont=round(ifelse(theo.cont<0,0,theo.cont))
     return(theo.cont)
   }

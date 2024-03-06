@@ -142,6 +142,12 @@ mr.sig.cell=function(data,nsample=2000,nbaxes.sig=Inf,two.sided=TRUE){
     }
 
     theo.cont.virt=calc.cont(virt.data)
+    if (length(vire)!=0){
+      add0=matrix(0,nrow(theo.cont.virt),length(vire))
+      colnames(add0)=nom.zero ; rownames(add0)=rownames(theo.cont.virt)
+      theo.cont.virt=cbind(theo.cont.virt,add0)
+      theo.cont.virt=theo.cont.virt[,sorted.name]
+    }
     sortie[,,ssample]=theo.cont.virt
     setTxtProgressBar(pb,ssample)
   }

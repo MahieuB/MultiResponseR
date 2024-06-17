@@ -11,6 +11,7 @@
 #' @param rev.y Should the vertical plotted dimension be reversed? Useful in case of map comparisons to align products
 #' @param size.points The size of the points used to represent the products on the map
 #' @param size.lab The size of the label on the map
+#' @param size.head.arrow The size of the head of the arrows used to represent the descriptors on the map
 #' @param expansion The factor of expansion applied to descriptors coordinates to increase readability
 #' @param title An optional title to be added to the plot
 #' @param ... further arguments passed to or from other methods
@@ -49,6 +50,7 @@ plot.sensory.mrCA=function(x,
                            rev.y = FALSE,
                            size.points = 3.5,
                            size.lab = 6,
+                           size.head.arrow = 0.4,
                            expansion = 1.25,
                            title = NULL,...){
   if (!inherits(x,"sensory.mrCA")){
@@ -149,7 +151,7 @@ plot.sensory.mrCA=function(x,
       df.fleche=rbind(df.fleche,as.matrix(x$proj.col.coord[,axes,drop=FALSE]))
       col.fleche=c(col.fleche,rep("red4",nrow(x$proj.col.coord)))
     }
-    p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(0.4, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
+    p=p+geom_segment(data = as.data.frame(df.fleche), aes(x=0, y=0,xend = df.fleche[,1], yend = df.fleche[,2]), arrow=arrow(length = unit(size.head.arrow, "cm"),type = "closed"), colour=col.fleche,linewidth=1)
   }
 
   

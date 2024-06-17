@@ -14,6 +14,7 @@
   rev.y = FALSE,
   size.points = 3.5,
   size.lab = 6,
+  size.head.arrow = 0.4,
   expansion = 1.25,
   title = NULL,
   ...
@@ -37,6 +38,8 @@
 \item{size.points}{The size of the points used to represent the categories on the map}
 
 \item{size.lab}{The size of the label on the map}
+
+\item{size.head.arrow}{The size of the head of the arrows used to represent the response options on the map}
 
 \item{expansion}{The factor of expansion applied to response options coordinates to increase readability}
 

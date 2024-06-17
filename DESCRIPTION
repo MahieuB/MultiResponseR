@@ -1,6 +1,6 @@
 Package: MultiResponseR
 Title: Analysis of Data from Multiple-Response Questionnaires
-Version: 1.3.0
+Version: 1.3.2
 Authors@R: 
     person(given = "Benjamin",family = "Mahieu",role = c("aut","cre"),email = "benjamin.mahieu@oniris-nantes.fr")
 Description: Implements the multiple-response chi-square framework introduced in Mahieu, Schlich, Visalli, and Cardot (2021).
@@ -8,7 +8,7 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Depends: 
     R (>= 4.0.0)
 Imports: 
